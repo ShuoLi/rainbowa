@@ -16,6 +16,8 @@ group :assets do
   gem 'uglifier'
 end
 
+gem 'faker'
+
 gem 'jquery-rails'
 
 # Use unicorn as the web server

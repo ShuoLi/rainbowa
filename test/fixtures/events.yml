@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  group_id: 1
+  time: 2011-12-19 16:09:34
+  video: MyString
+  description: MyText
+
+two:
+  group_id: 1
+  time: 2011-12-19 16:09:34
+  video: MyString
+  description: MyText

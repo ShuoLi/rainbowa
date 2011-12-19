@@ -1,4 +1,24 @@
 Youtubetimelinewiki::Application.routes.draw do
+  get "events/create"
+
+  get "events/destroy"
+
+  get "events/update"
+
+  get "events/index"
+
+  get "events/show"
+
+  get "timelines/create"
+
+  get "timelines/destroy"
+
+  get "timelines/update"
+
+  get "timelines/index"
+
+  get "timelines/show"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -48,7 +68,7 @@ Youtubetimelinewiki::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'timelines#index'
 
   # See how all your routes lay out with "rake routes"
 

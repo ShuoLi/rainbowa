@@ -9,15 +9,7 @@ Youtubetimelinewiki::Application.routes.draw do
 
   get "events/show"
 
-  get "timelines/create"
-
-  get "timelines/destroy"
-
-  get "timelines/update"
-
-  get "timelines/index"
-
-  get "timelines/show"
+  resources :timelines
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,2 +1,60 @@
-<h1>Timelines#show</h1>
-<p>Find me in app/views/timelines/show.html.erb</p>
+<style>
+#spane{
+	height:1000px;
+	width:1px;
+	background-color:black;
+	position:absolute;
+	top:100px;
+	left:500px;
+}
+</style>
+
+
+<div id="base"></div>
+<div id="spane">
+		
+</div>
+
+	<script>
+	var times = new Array();
+	var shortcut = new Array();
+	var playhtml = new Array();
+	var i=0;
+	<% @timeline.events.each do |event| %>
+	  times[i] = <%= event.time-Time.new %>;
+		i++;
+	<% end %>
+	var min=Math.min.apply(null, times);
+	var length=Math.max.apply(null,times)-min;
+	console.log(length);
+	 $("#spane").css("height",length/100000+"px");
+	for(var j=0;j<i;j++){
+		length=times[j]-min;
+		$("#base").append("<div id='"+j+"' class='event'></div>");
+		$("#"+j).css("position","absolute");
+		$("#"+j).css("top",(100+(length)/100000)+"px");
+		$("#"+j).css("width","180px");
+		$("#"+j).css("height","120px");
+		$("#"+j).css("background-color","red");
+		/!--random the pisition part-/
+		if(Math.random()>=0.5){
+			$("#"+j).css("left","500px");
+		}else{
+			$("#"+j).css("left","320px");
+		}
+		var video='d2WJxCH9whI';
+		var pic='http://img.youtube.com/vi/'+video+'/hqdefault.jpg';
+		var embeded='http://www.youtube.com/embed/'+video;
+		console.log(pic);
+		shortcut[j]='<img src="'+pic+'" height=120px width=90px></img>';
+	  playhtml[j]='<iframe width="360" height="240px" src="'+
+				embeded+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
+		console.log(playhtml[j]);
+		$("#"+j).html(shortcut[j]);
+	}
+		$(".event").click(function() {
+			var temp=$(this).attr("id");
+			$("#"+temp).html(playhtml[temp]);})
+		// 		console.log(length/100000);
+
+	</script>

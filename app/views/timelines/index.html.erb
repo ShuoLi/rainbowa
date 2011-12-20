@@ -1,6 +1,10 @@
 <h1>Timelines#index</h1>
 <p>Find me in app/views/timelines/index.html.erb</p>
-
+<%#= text_field_tag "date" %>
+<input type="text" name="date" id="date" />
+<script>
+$('#date').datepicker();
+</script>
 <ul>
 	<% @timeline.each do |tl| %>
 	<li>

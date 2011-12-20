@@ -11,11 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111219212056) do
+ActiveRecord::Schema.define(:version => 20111220041104) do
 
   create_table "events", :force => true do |t|
     t.integer  "timeline_id"
-    t.integer  "group_id"
     t.datetime "time"
     t.string   "video"
     t.text     "description"
@@ -23,12 +22,38 @@ ActiveRecord::Schema.define(:version => 20111219212056) do
     t.datetime "updated_at"
   end
 
-  add_index "events", ["group_id"], :name => "index_events_on_group_id"
+  add_index "events", ["timeline_id"], :name => "index_events_on_timeline_id"
+
+  create_table "follows", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "timeline_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "follows", ["timeline_id"], :name => "index_follows_on_timeline_id"
+  add_index "follows", ["user_id"], :name => "index_follows_on_user_id"
+
+  create_table "records", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "records", ["event_id"], :name => "index_records_on_event_id"
+  add_index "records", ["user_id"], :name => "index_records_on_user_id"
 
   create_table "timelines", :force => true do |t|
     t.string   "subject"
     t.text     "description"
     t.string   "photo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,12 +1,6 @@
 <style>
-#spane{
-	height:1000px;
-	width:1px;
-	background-color:black;
-	position:absolute;
-	top:100px;
-	left:500px;
-}
+
+
 </style>
 
 
@@ -19,42 +13,46 @@
 	var times = new Array();
 	var shortcut = new Array();
 	var playhtml = new Array();
+	var dess = new Array();
+	var lr=false;//0-left 1-right
 	var i=0;
 	<% @timeline.events.each do |event| %>
 	  times[i] = <%= event.time-Time.new %>;
+		dess[i]='<%= escape_javascript event.description %>';
 		i++;
 	<% end %>
 	var min=Math.min.apply(null, times);
 	var length=Math.max.apply(null,times)-min;
-	console.log(length);
-	 $("#spane").css("height",length/100000+"px");
+	 $("#spane").css("height",230*i+"px");
+	length=100;
 	for(var j=0;j<i;j++){
-		length=times[j]-min;
 		$("#base").append("<div id='"+j+"' class='event'></div>");
 		$("#"+j).css("position","absolute");
-		$("#"+j).css("top",(100+(length)/100000)+"px");
-		$("#"+j).css("width","180px");
-		$("#"+j).css("height","120px");
-		$("#"+j).css("background-color","red");
+		$("#"+j).css("top",length+"px");
+
 		/!--random the pisition part-/
-		if(Math.random()>=0.5){
-			$("#"+j).css("left","500px");
+		if(lr==true){
+			$("#"+j).css("left","510px");
 		}else{
-			$("#"+j).css("left","320px");
+			$("#"+j).css("left","79px");
 		}
-		var video='d2WJxCH9whI';
+		lr=!lr;
+		var video='8xg3vE8Ie_E';
 		var pic='http://img.youtube.com/vi/'+video+'/hqdefault.jpg';
 		var embeded='http://www.youtube.com/embed/'+video;
 		console.log(pic);
-		shortcut[j]='<img src="'+pic+'" height=120px width=90px></img>';
-	  playhtml[j]='<iframe width="360" height="240px" src="'+
+		shortcut[j]='<div id='+j+' class="shortcut"><img src="'+pic+'" height="214px" width="379px" position="absolute" top="0px" left="10px"></img></div>';
+	  playhtml[j]='<iframe width="403px" height="227px" src="'+
 				embeded+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
-		console.log(playhtml[j]);
 		$("#"+j).html(shortcut[j]);
+		$("#"+j).append("<div class='describ'>"+dess[j]+"</div>");
+		length+=230;
 	}
-		$(".event").click(function() {
-			var temp=$(this).attr("id");
-			$("#"+temp).html(playhtml[temp]);})
+		$(".shortcut").click(function() {
+			 var temp=$(this).attr("id");
+			$(this).html(playhtml[temp]);});
 		// 		console.log(length/100000);
-
+		$(document).click(function(e){
+			alert(e.pageX+','+e.pageY);
+		});
 	</script>

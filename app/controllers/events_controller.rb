@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   def create
+    puts params[:event]
   end
 
   def destroy

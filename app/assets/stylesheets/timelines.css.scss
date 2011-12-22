@@ -1,3 +1,39 @@
 // Place all the styles related to the Timelines controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+body{
+background-color:black;
+
+.event{
+	color:white;
+	font-size:11px;
+	width:411px;
+	height:395px;
+}
+
+}
+
+#spane{
+	height:1000px;
+	width:10px;
+	background-image:url('spane.png');
+	background-color:white;
+	position:absolute;
+	top:100px;
+	left:495px;
+}
+
+
+.shortcut{
+	position:relative;
+	left:0px;
+	top:-0px;
+	height:227px;
+	width:403px;
+}
+
+.describ{
+	height:168px;
+	width:403px;
+	overflow:auto;
+ }

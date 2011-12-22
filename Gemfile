@@ -20,6 +20,10 @@ gem 'faker'
 
 gem 'jquery-rails'
 
+# omniauth for authentication
+# gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

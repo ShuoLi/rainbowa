@@ -1,15 +1,22 @@
-<h1>new event</h1>
-<%= form_for(@event, :html => { :class => "new_event", :multipart => true} ) do |e| %>
+<span>new event</span>
+<%= form_for(@event, :html => { :class => "new_event", :multipart => true}) do |e| %>
 
-<%=e.hidden_field :timeline_id, :value => @timeline.id %>
-<%= e.hidden_field :time, :value => "123" %>
+<%= e.hidden_field :timeline_id, :value => @timeline.id %>
+<%#= e.hidden_field :time, :value => "123" %>
 
-<%= f.label :video, "video" %>
-<%= f.text_field :video %>
+<%= e.label :time, "time" %>
+<%= e.text_field :time %><br>
 
-<%= f.label :description, "description" %>
-<%= f.text_field :description %>
+<%= e.label :video, "video" %>
+<%= e.text_field :video %><br>
 
-<%= f.submit "post" %>
+<%= e.label :description, "description" %>
+<%= e.text_field :description %><br>
+
+<%= e.submit "post" %>
 
 <% end %>
+
+<script>
+$('#event_time').datepicker();
+</script>

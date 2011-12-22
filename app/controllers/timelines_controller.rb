@@ -14,7 +14,7 @@ class TimelinesController < ApplicationController
 
   def show
     @timeline = Timeline.find(params[:id])
-    @event = @timeline.events.new
+    @event = Event.new
   end
 
 end

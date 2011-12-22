@@ -4,15 +4,7 @@ Youtubetimelinewiki::Application.routes.draw do
   match "/signout" => "sessions#destroy", :as => :signout
   match '/auth/failure' => 'sessions#failure'
 
-  get "events/create"
-
-  get "events/destroy"
-
-  get "events/update"
-
-  get "events/index"
-
-  get "events/show"
+  resources :events
 
   resources :timelines
 

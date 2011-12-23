@@ -1,0 +1,29 @@
+<% if current_user %>
+<br>
+<% if if_follow?(@timeline.id) %>
+<%= button_to_function "unfollow", "follow()", :id => "follow_button", :style => "width:7em;" %>
+<% else %>
+<%= button_to_function "follow", "follow()", :id => "follow_button", :style => "width:7em;" %>
+<% end %>
+
+<script>
+	function follow(){
+		var value = $("#follow_button").attr("value");
+		if(value == "follow"){
+			$("#follow_button").attr("value", "unfollow");
+			$.ajax({
+				url:"<%= followtl_path %>",
+				type:"POST",
+				data:{"timeline_id": <%= @timeline.id %>}
+			});
+		}else{//unfollow
+			$("#follow_button").attr("value", "follow");
+			$.ajax({
+				url:"<%= unfollowtl_path %>",
+				type:"POST",
+				data:{"timeline_id": <%= @timeline.id %>}
+			});
+		}
+	}
+</script>
+<% end %>

@@ -4,6 +4,10 @@ Youtubetimelinewiki::Application.routes.draw do
   match "/signout" => "sessions#destroy", :as => :signout
   match '/auth/failure' => 'sessions#failure'
 
+  match '/followtl' => 'follows#create'
+  match '/unfollowtl' => 'follows#destroy'
+  resources :follows
+
   resources :events
 
   resources :timelines

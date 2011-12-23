@@ -1,0 +1,20 @@
+<h1>Timelines#new</h1>
+<p>Find me in app/views/timelines/new.html.erb</p>
+
+<% if current_user %>
+<span>new timeline</span>
+<%= form_for(@timeline, :html => { :class => "new_timeline", :multipart => true}) do |tl| %>
+
+<%= tl.label :subject, "subject" %><br>
+<%= tl.text_field :subject %><br>
+
+<%= tl.label :description, "description" %><br>
+<%= tl.text_area :description %><br>
+
+<%= tl.label :photo, "photo_link" %><br>
+<%= tl.text_field :photo %><br>
+
+<%= tl.submit "create timeline" %>
+
+<% end %>
+<% end %>

@@ -21,7 +21,7 @@ background-color:black;
 	top:100px;
 	left:495px;
 	&:hover{
-	background-image:url("spane.png");
+	background-image:url('spane.png');
 	}
 }
 
@@ -41,6 +41,8 @@ background-color:black;
  }
 
 #editPanel{
+color:black;
+	z-index: 1;
 	height:100px;
 	width:300px;
 	background-color:white;

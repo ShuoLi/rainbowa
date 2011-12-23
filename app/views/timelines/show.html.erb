@@ -1,6 +1,6 @@
 <style>
 </style>
-<%= render "events/newevent" %>
+<%= render 'events/newevent' %>
 <div id="base"></div>
 <div id="spane">
 	
@@ -10,13 +10,16 @@
 	var shortcut = new Array();
 	var playhtml = new Array();
 	var dess = new Array();
+	var videos=new Array();
 	var lr=false;//0-left 1-right
 	var i=0;
-	$("<div id='editPanel'>aa</div>").appendTo("body");
+	var edit = false;
+	// $('<div id="editPanel"></div>').appendTo("body");
 	$("#editPanel").css("visibility","hidden");
 	<% @timeline.events.each do |event| %>
 	  times[i] = <%= event.time-Time.new %>;
 		dess[i]='<%= escape_javascript event.description %>';
+		videos[i]='<%=event.video%>';
 		i++;
 	<% end %>
 	var min=Math.min.apply(null, times);
@@ -35,9 +38,9 @@
 			$("#"+j).css("left","79px");
 		}
 		lr=!lr;
-		var video='8xg3vE8Ie_E';
-		var pic='http://img.youtube.com/vi/'+video+'/hqdefault.jpg';
-		var embeded='http://www.youtube.com/embed/'+video;
+		
+		var pic='http://img.youtube.com/vi/'+videos[j]+'/hqdefault.jpg';
+		var embeded='http://www.youtube.com/embed/'+videos[j];
 		console.log(pic);
 		shortcut[j]='<div id='+j+' class="shortcut"><img src="'+pic+'" height="214px" width="379px" position="absolute" top="0px" left="10px"></img></div>';
 	  playhtml[j]='<iframe width="403px" height="227px" src="'+
@@ -49,17 +52,32 @@
 		$(".shortcut").click(function() {
 			 var temp=$(this).attr("id");
 			$(this).html(playhtml[temp]);});
-		// $(document).click(function(e){
-		// 		alert(e.pageX+','+e.pageY);
-		// 	});
+			
+			$("#spane").click(function(e){
+						var currentY=e.pageY;
+						var currentX=e.pageX;
+						$("#editPanel").css("top",currentY);
+						$("#editPanel").css("left",currentX);
+						edit=true;
+			});
+				$("#editPanel").click(function(e){
+							edit=true;
+				});
+
+		$(document).click(function(){
+						if(edit==true){
+							$("#editPanel").css("visibility","visible");
+							// $("#editPanel").html(url('events/newevent'));
+							edit=false;
+						}else{
+							$("#editPanel").css("visibility","hidden");
+						}
+		  });
 	
-		
-		$("#spane").click(function(e){
-				var currentY=e.pageY;
-				var currentX=e.pageX;
-				$("#editPanel").css("top",currentY);
-				$("#editPanel").css("left",currentX);
-				$("#editPanel").css("visibility","visible");
- 				$("#editPanel").toggle("fast");
-		});
+
+	$('#event_time').datepicker({ dateFormat: "yy-mm-dd"});
+	//this is part of the time picker which built in the new event
+	$("#ui-datepicker-div").click(function(e){
+				edit=true;
+	});
 	</script>

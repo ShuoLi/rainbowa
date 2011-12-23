@@ -1,3 +1,4 @@
+<div id="editPanel">
 <span>new event</span>
 <%= form_for(@event, :html => { :class => "new_event", :multipart => true}) do |e| %>
 
@@ -16,7 +17,4 @@
 <%= e.submit "post" %>
 
 <% end %>
-
-<script>
-$('#event_time').datepicker({ dateFormat: "yy-mm-dd"});
-</script>
+</div>

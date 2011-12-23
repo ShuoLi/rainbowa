@@ -5,6 +5,7 @@ class EventsController < ApplicationController
     event = Timeline.find(ep[:timeline_id]).events.build(:time => ep[:time],
                                                 :video => ep[:video],
                                                 :description => ep[:description])
+    event.records.build(:user_id => current_user.id)
     if event.save
       redirect_to timeline_path(ep[:timeline_id])
     else

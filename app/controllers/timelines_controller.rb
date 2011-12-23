@@ -1,5 +1,11 @@
 class TimelinesController < ApplicationController
   def create
+    @timeline = Timeline.create(params[:timeline])
+    follow = @timeline.follows.find_by_user_id(current_user.id)
+    unless follow
+      @timeline.follows.create(:user_id => current_user.id)
+    end
+    redirect_to timeline_path(@timeline)
   end
 
   def destroy
@@ -17,4 +23,7 @@ class TimelinesController < ApplicationController
     @event = Event.new
   end
 
+  def new
+    @timeline = Timeline.new
+  end
 end

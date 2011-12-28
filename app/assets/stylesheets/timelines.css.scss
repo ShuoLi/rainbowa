@@ -1,9 +1,9 @@
 // Place all the styles related to the Timelines controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
 body{
 background-color:black;
-
 .event{
 	color:white;
 	font-size:11px;
@@ -20,11 +20,40 @@ background-color:black;
 	position:absolute;
 	top:100px;
 	left:495px;
-	&:hover{
-	background-image:url('spane.png');
-	}
 }
 
+#timeStamp{
+	height:20px;
+	width:40px;
+	color:white;
+	position:absolute;
+	left:474px;
+}
+
+#spur{
+	position:absolute;
+	background-color:black;
+	top:100px;
+	width:24px;
+	left:488px;
+	z-index:-1;
+	.ruler{
+		position:absolute;
+		left:-10px;
+		background-color:black;
+		height:8px;
+		width:20px;
+		z-index:2;
+		.innerRuler{
+		background-color: #9416DD;
+		//opacity: 0.3;
+		height:4px;
+		position:relative;
+		top:-2px;
+		z-index:3;
+		}
+	}
+}
 
 .shortcut{
 	position:relative;
@@ -48,4 +77,6 @@ color:black;
 	background-color:white;
 	position:absolute;
 }
+
+
 

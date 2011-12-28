@@ -3,7 +3,7 @@
 <%= render "follow_timeline" %>
 
 <div id="base"></div>
-<div id="spane">
+<!-- <div id="spane"> -->
 	
 </div>
 	<script>
@@ -12,21 +12,32 @@
 	var playhtml = new Array();
 	var dess = new Array();
 	var videos=new Array();
+	var timeRuler=new Array();
 	var lr=false;//0-left 1-right
 	var i=0;
 	var edit = false;
-	// $('<div id="editPanel"></div>').appendTo("body");
-	$("#editPanel").css("visibility","hidden");
+	var idtemp=0;
+	var dist=5;
+	var timetemp=0;
+	var beginAnimeTime=500;
+	var endAnimeTime=100;
+ 	$('<div id="spur"></div>').appendTo("body");
+	$("<div id='timeStamp'></div>").appendTo("body");
+	$("#timeStamp").css("visibility","hidden");
+	<% if @timeline.events.size > 0 %>
+		$("#editPanel").css("visibility","hidden");
+	<% end %>
 	<% @timeline.events.each do |event| %>
 	  times[i] = <%= event.time-Time.new %>;
-		dess[i]='<%= escape_javascript event.description %>';
+		dess[i]='<%=escape_javascript event.description %>';
 		videos[i]='<%=event.video%>';
 		i++;
 	<% end %>
 	var min=Math.min.apply(null, times);
-	var length=Math.max.apply(null,times)-min;
+	var maxLength=230*i;
 	 $("#spane").css("height",230*i+"px");
-	length=100;
+	 $("#spur").css("height",230*i+"px");
+	var length=100;
 	for(var j=0;j<i;j++){
 		$("#base").append("<div id='"+j+"' class='event'></div>");
 		$("#"+j).css("position","absolute");
@@ -34,9 +45,9 @@
 
 		/!--random the pisition part-/
 		if(lr==true){
-			$("#"+j).css("left","510px");
+			$("#"+j).css("left","538px");
 		}else{
-			$("#"+j).css("left","79px");
+			$("#"+j).css("left","59px");
 		}
 		lr=!lr;
 		
@@ -81,4 +92,63 @@
 	$("#ui-datepicker-div").click(function(e){
 				edit=true;
 	});
+
+	 for(i=0;i<maxLength;i+=dist){
+	 	$("#spur").append("<div class='ruler' id='-"+i+"'><div class='innerRuler'></div></div>");
+		$('#-'+i).css("top",i);
+		timetemp = parseInt(i/230);
+		timeRuler[i]=new Date(((times[timetemp+1]-times[timetemp])*(i/230)+times[timetemp])*1000);
+}
+	$(".ruler").hover(function(e){
+				$(this).animate({width:"60px",
+												left:"-40px"},
+												beginAnimeTime);
+				// $(this).css("left","-30px");
+				// $(this).find(".innerRuler").css("height","10px");
+				// 			  $(this).find(".innerRuler").css("top","-5px");
+				// 				$(this).find(".innerRuler").css("background-color","LIGHTBLUE");
+				$(this).find(".innerRuler").animate({height:"10px",top:"-5px"},beginAnimeTime);
+				idtemp=parseInt($(this).attr("id"));	
+				 var col = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+				$(this).find(".innerRuler").css("background-color",col);
+								// $("#"+(idtemp+dist)).css("width","20px");
+								// $("#"+(idtemp+dist)).css("left","-20px");
+				$("#"+(idtemp+dist)).animate({width:"50px",left:"-30px"},beginAnimeTime);
+				$("#"+(idtemp-dist)).animate({width:"50px",left:"-30px"},beginAnimeTime);
+				$("#"+(idtemp+2*dist)).animate({width:"45px",left:"-25px"},beginAnimeTime);
+				$("#"+(idtemp-2*dist)).animate({width:"45px",left:"-25px"},beginAnimeTime);
+									// $("#"+(idtemp-dist)).css("width","20px");
+									// 							$("#"+(idtemp-dist)).css("left","-20px");
+									// $("#"+(idtemp+2*dist)).css("width","15px");
+									// 									$("#"+(idtemp+2*dist)).css("left","-15px");
+									// 									$("#"+(idtemp-2*dist)).css("width","15px");
+									// 									$("#"+(idtemp-2*dist)).css("left","-15px");
+					
+				$("#timeStamp").css("top",$(this).attr("top"));
+				$("#timeStamp").html(timeRuler[-idtemp].toGMTString());
+				// $("#timeStamp").css("visibility","visible");
+			},
+			function(e){
+				$("#timeStamp").css("visibility","hidden");
+					$(this).animate({width:"24px",
+													left:"-10px"},
+													endAnimeTime);
+				// $(this).css("left","-10px");				 
+								 // $(this).find(".innerRuler").css("height","4px");
+								 // $(this).find(".innerRuler").css("top","-2px");
+				// 				$(this).find(".innerRuler").css("background-color","yellow");
+				$(this).find(".innerRuler").animate({height:"4px",top:"-2px"},endAnimeTime);
+				$("#"+(idtemp+dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
+				$("#"+(idtemp-dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
+				$("#"+(idtemp+2*dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
+				$("#"+(idtemp-2*dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
+				// $("#"+(idtemp+dist)).css("width","10px");
+				// 				$("#"+(idtemp+dist)).css("left","-10px");
+				// 				$("#"+(idtemp-dist)).css("width","10px");
+				// 				$("#"+(idtemp-dist)).css("left","-10px");
+				// 				$("#"+(idtemp+2*dist)).css("width","10px");
+				// 				$("#"+(idtemp+2*dist)).css("left","-10px");
+				// 				$("#"+(idtemp-2*dist)).css("width","10px");
+				// 				$("#"+(idtemp-2*dist)).css("left","-10px");
+			});	
 	</script>

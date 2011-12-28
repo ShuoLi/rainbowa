@@ -1,8 +1,6 @@
-<<<<<<< HEAD
+
 <div id="editPanel">
-=======
 <% if current_user %>
->>>>>>> 77f37b46fb2619f4f828ce01d1d9f70c60876dd0
 <span>new event</span>
 <%= form_for(@event, :html => { :class => "new_event", :multipart => true}) do |e| %>
 
@@ -21,13 +19,7 @@
 <%= e.submit "post" %>
 
 <% end %>
-<<<<<<< HEAD
-</div>
-=======
 
-<script>
-$('#event_time').datepicker({ dateFormat: "yy-mm-dd"});
-</script>
+</div>
 
 <% end %>
->>>>>>> 77f37b46fb2619f4f828ce01d1d9f70c60876dd0

@@ -1,154 +1,123 @@
-
-<%= render "events/newevent" %>
-<%= render "follow_timeline" %>
-
 <div id="base"></div>
-<!-- <div id="spane"> -->
-	
-</div>
-	<script>
-	var times = new Array();
-	var shortcut = new Array();
-	var playhtml = new Array();
-	var dess = new Array();
-	var videos=new Array();
-	var timeRuler=new Array();
-	var lr=false;//0-left 1-right
-	var i=0;
-	var edit = false;
-	var idtemp=0;
-	var dist=5;
-	var timetemp=0;
-	var beginAnimeTime=500;
-	var endAnimeTime=100;
- 	$('<div id="spur"></div>').appendTo("body");
-	$("<div id='timeStamp'></div>").appendTo("body");
-	$("#timeStamp").css("visibility","hidden");
-	<% if @timeline.events.size > 0 %>
-		$("#editPanel").css("visibility","hidden");
-	<% end %>
-	<% @timeline.events.each do |event| %>
-	  times[i] = <%= event.time-Time.new %>;
-		dess[i]='<%=escape_javascript event.description %>';
-		videos[i]='<%=event.video%>';
-		i++;
-	<% end %>
-	var min=Math.min.apply(null, times);
-	var maxLength=230*i;
-	 $("#spane").css("height",230*i+"px");
-	 $("#spur").css("height",230*i+"px");
-	var length=100;
-	for(var j=0;j<i;j++){
-		$("#base").append("<div id='"+j+"' class='event'></div>");
-		$("#"+j).css("position","absolute");
-		$("#"+j).css("top",length+"px");
-
-		/!--random the pisition part-/
-		if(lr==true){
-			$("#"+j).css("left","538px");
-		}else{
-			$("#"+j).css("left","59px");
-		}
-		lr=!lr;
-		
-		var pic='http://img.youtube.com/vi/'+videos[j]+'/hqdefault.jpg';
-		var embeded='http://www.youtube.com/embed/'+videos[j];
-		console.log(pic);
-		shortcut[j]='<div id='+j+' class="shortcut"><img src="'+pic+'" height="214px" width="379px" position="absolute" top="0px" left="10px"></img></div>';
-	  playhtml[j]='<iframe width="403px" height="227px" src="'+
-				embeded+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
-		$("#"+j).html(shortcut[j]);
-		$("#"+j).append("<div class='describ'>"+dess[j]+"</div>");
-		length+=230;
-	}
-		$(".shortcut").click(function() {
-			 var temp=$(this).attr("id");
-			$(this).html(playhtml[temp]);});
-			
-			$("#spane").click(function(e){
-						var currentY=e.pageY;
-						var currentX=e.pageX;
-						$("#editPanel").css("top",currentY);
-						$("#editPanel").css("left",currentX);
-						edit=true;
-			});
-				$("#editPanel").click(function(e){
-							edit=true;
-				});
-
-		$(document).click(function(){
-						if(edit==true){
-							$("#editPanel").css("visibility","visible");
-							// $("#editPanel").html(url('events/newevent'));
-							edit=false;
-						}else{
-							$("#editPanel").css("visibility","hidden");
-						}
-		  });
-	
-
-	$('#event_time').datepicker({ dateFormat: "yy-mm-dd"});
-	//this is part of the time picker which built in the new event
-	$("#ui-datepicker-div").click(function(e){
-				edit=true;
-	});
-
-	 for(i=0;i<maxLength;i+=dist){
-	 	$("#spur").append("<div class='ruler' id='-"+i+"'><div class='innerRuler'></div></div>");
-		$('#-'+i).css("top",i);
-		timetemp = parseInt(i/230);
-		timeRuler[i]=new Date(((times[timetemp+1]-times[timetemp])*(i/230)+times[timetemp])*1000);
+<script>
+var times = new Array();
+var shortcut = new Array();
+var playhtml = new Array();
+var dess = new Array();
+var videos=new Array();
+var lr=false;//0-left 1-right
+var maxNumber=0;
+var idtemp=0;
+var dist=5;
+var beginAnimeTime=300;
+var endAnimeTime=300;
+var videoDist = 230;
+var playing = new Array();
+<% @timeline.events.each do |event| %>
+times[maxNumber] = '<%= event.time.to_s %>';
+dess[maxNumber]='<%=escape_javascript event.description %>';
+videos[maxNumber]='<%=event.video%>';
+maxNumber++;
+<% end %>
+for(k=0;k<maxNumber;k++){
+	playing[k]=false;
 }
-	$(".ruler").hover(function(e){
-				$(this).animate({width:"60px",
-												left:"-40px"},
-												beginAnimeTime);
-				// $(this).css("left","-30px");
-				// $(this).find(".innerRuler").css("height","10px");
-				// 			  $(this).find(".innerRuler").css("top","-5px");
-				// 				$(this).find(".innerRuler").css("background-color","LIGHTBLUE");
-				$(this).find(".innerRuler").animate({height:"10px",top:"-5px"},beginAnimeTime);
-				idtemp=parseInt($(this).attr("id"));	
-				 var col = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
-				$(this).find(".innerRuler").css("background-color",col);
-								// $("#"+(idtemp+dist)).css("width","20px");
-								// $("#"+(idtemp+dist)).css("left","-20px");
-				$("#"+(idtemp+dist)).animate({width:"50px",left:"-30px"},beginAnimeTime);
-				$("#"+(idtemp-dist)).animate({width:"50px",left:"-30px"},beginAnimeTime);
-				$("#"+(idtemp+2*dist)).animate({width:"45px",left:"-25px"},beginAnimeTime);
-				$("#"+(idtemp-2*dist)).animate({width:"45px",left:"-25px"},beginAnimeTime);
-									// $("#"+(idtemp-dist)).css("width","20px");
-									// 							$("#"+(idtemp-dist)).css("left","-20px");
-									// $("#"+(idtemp+2*dist)).css("width","15px");
-									// 									$("#"+(idtemp+2*dist)).css("left","-15px");
-									// 									$("#"+(idtemp-2*dist)).css("width","15px");
-									// 									$("#"+(idtemp-2*dist)).css("left","-15px");
-					
-				$("#timeStamp").css("top",$(this).attr("top"));
-				$("#timeStamp").html(timeRuler[-idtemp].toGMTString());
-				// $("#timeStamp").css("visibility","visible");
-			},
-			function(e){
-				$("#timeStamp").css("visibility","hidden");
-					$(this).animate({width:"24px",
-													left:"-10px"},
-													endAnimeTime);
-				// $(this).css("left","-10px");				 
-								 // $(this).find(".innerRuler").css("height","4px");
-								 // $(this).find(".innerRuler").css("top","-2px");
-				// 				$(this).find(".innerRuler").css("background-color","yellow");
-				$(this).find(".innerRuler").animate({height:"4px",top:"-2px"},endAnimeTime);
-				$("#"+(idtemp+dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
-				$("#"+(idtemp-dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
-				$("#"+(idtemp+2*dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
-				$("#"+(idtemp-2*dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
-				// $("#"+(idtemp+dist)).css("width","10px");
-				// 				$("#"+(idtemp+dist)).css("left","-10px");
-				// 				$("#"+(idtemp-dist)).css("width","10px");
-				// 				$("#"+(idtemp-dist)).css("left","-10px");
-				// 				$("#"+(idtemp+2*dist)).css("width","10px");
-				// 				$("#"+(idtemp+2*dist)).css("left","-10px");
-				// 				$("#"+(idtemp-2*dist)).css("width","10px");
-				// 				$("#"+(idtemp-2*dist)).css("left","-10px");
-			});	
-	</script>
+var maxLength=videoDist*maxNumber;
+$('<div id="spur"></div>').appendTo("body");
+$("#spur").css("height",videoDist*maxNumber+"px");
+var length=100;
+//get all events
+for(var j=0;j<maxNumber;j++){
+	$("#base").append("<div id='"+j+"' class='event'></div>");
+	$("#"+j).css("position","absolute");
+	$("#"+j).css("top",length+"px");
+	/!--random the position part-/
+	if(lr==true){
+		$("#"+j).css("left","538px");
+	}else{
+		$("#"+j).css("left","59px");
+	}
+	lr=!lr;
+	//assign the event content
+	var pic='http://img.youtube.com/vi/'+videos[j]+'/hqdefault.jpg';
+	var embeded='http://www.youtube.com/embed/'+videos[j];
+	shortcut[j]='<div id='+j+' class="shortcut"><img src="'+pic+'" height="214px" width="379px" position="absolute" top="0px" left="10px"></img></div>';
+	playhtml[j]='<iframe width="403px" height="227px" src="'+
+	embeded+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
+	$("#"+j).html(shortcut[j]);
+	$("#"+j).append("<div>"+embeded+"</div><div class='describ'>"+dess[j]+"</div>");
+	length+=videoDist;
+}
+$(".shortcut").click(function() {
+	var temp=$(this).attr("id");
+	$(this).html(playhtml[temp]);
+});
+//the loop to build the rainbow
+for(i=100;i<maxLength+100;i+=dist){
+	var iterator=i-100;
+	$("#spur").append("<div class='ruler' id='-"+i+"'><div class='innerRuler'></div></div>");
+	$('#-'+i).css("top",iterator);
+}
+//rainbow hover function
+$(".ruler").hover(function(){
+	idtemp=parseInt($(this).attr("id"));
+	wavein(idtemp);
+},
+function(){
+	waveout(idtemp);
+});	
+//the click funtion of the spur
+var topdist=0;
+$("#spur").click(function(e){
+	topdist=parseInt((e.pageY-100)/videoDist);
+
+	for(k=0;k<maxNumber;k++){
+		if(k==topdist){
+			playing[k]=!playing[k];
+			if(playing[k]==true)
+			$("#"+k).find(".shortcut").html(playhtml[topdist]);
+			else
+			$("#"+k).find(".shortcut").html(shortcut[topdist]);
+		}else{
+			if(playing[k]==true){
+				playing[k]=false;
+				$("#"+k).find(".shortcut").html(shortcut[k]);
+			}
+		}
+	}
+	waveon();
+});
+
+function waveon(){
+		var waveid=-100-videoDist*topdist-Math.floor(Math.random()*(videoDist+1));
+		wavein(waveid);
+		waveout(waveid);
+		if(playing[topdist]==false){
+			return false;
+		}
+		setTimeout("waveon()",10);
+}
+
+function wavein(idtemp){
+	$("#"+idtemp).animate({width:"60px",
+	left:"-40px"},
+	beginAnimeTime);
+	$("#"+idtemp).find(".innerRuler").animate({height:"10px",top:"-5px"},beginAnimeTime);	
+	var col = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+	$("#"+idtemp).find(".innerRuler").css("background-color",col);
+	$("#"+(idtemp+dist)).animate({width:"50px",left:"-30px"},beginAnimeTime);
+	$("#"+(idtemp-dist)).animate({width:"50px",left:"-30px"},beginAnimeTime);
+	$("#"+(idtemp+2*dist)).animate({width:"45px",left:"-25px"},beginAnimeTime);
+	$("#"+(idtemp-2*dist)).animate({width:"45px",left:"-25px"},beginAnimeTime);
+}
+function waveout(idtemp){
+	$("#"+idtemp).animate({width:"24px",
+	left:"-10px"},
+	endAnimeTime);
+	$("#"+idtemp).find(".innerRuler").animate({height:"4px",top:"-2px"},endAnimeTime);
+	$("#"+(idtemp+dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
+	$("#"+(idtemp-dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
+	$("#"+(idtemp+2*dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
+	$("#"+(idtemp-2*dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
+}
+</script>

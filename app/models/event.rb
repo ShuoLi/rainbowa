@@ -3,4 +3,7 @@ class Event < ActiveRecord::Base
   
   belongs_to :timeline
   has_many :records
+  
+  default_scope :order => 'events.time DESC'
+  
 end

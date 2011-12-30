@@ -69,5 +69,25 @@ color:black;
 	left:100px;
 }
 
-
-
+/* css for player button groups */
+#play_button{
+	position: fixed;
+	right: 0px;
+	bottom: 250px;
+}
+#play_last_button{
+	@extend #play_button;
+	bottom: 200px;
+}
+#play_next_button{
+	@extend #play_button;
+	bottom: 150px;
+}
+#stop_play_button{
+	@extend #play_button;
+	bottom: 100px;
+}
+#shuffle_play_button{
+	@extend #play_button;
+	bottom: 50px;
+}

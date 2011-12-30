@@ -1,5 +1,11 @@
 
 <div id="base"></div>
+<%= image_tag "play.png", :size => "40x40", :alt => "play", :id => "play_button" %>
+<%= image_tag "stop.png", :size => "40x40", :alt => "stop", :id => "stop_play_button" %>
+<%= image_tag "up.png", :size => "40x40", :alt => "last", :id => "play_last_button" %>
+<%= image_tag "down.png", :size => "40x40", :alt => "next", :id => "play_next_button" %>
+<%= image_tag "shuffle.png", :size => "40x40", :alt => "shuffle", :id => "shuffle_play_button" %>
+
 
 <script>
 var times = new Array();
@@ -76,18 +82,20 @@ function(){
 var topdist=0;
 $("#spur").click(function(e){
 	topdist=parseInt((e.pageY-100)/videoDist);
-
+	
 	for(k=0;k<maxNumber;k++){
 		if(k==topdist){
 			playing[k]=!playing[k];
 			if(playing[k]==true)
 			$("#"+k).find(".shortcut").html(playhtml[topdist]);
 			else
-			$("#"+k).find(".shortcut").html(shortcut[topdist]);
+			$("#"+k).html(shortcut[topdist]);
 		}else{
+			console.log("inn");
 			if(playing[k]==true){
+				console.log("in");
 				playing[k]=false;
-				$("#"+k).find(".shortcut").html(shortcut[k]);
+				$("#"+k).html(shortcut[k]);
 			}
 		}
 	}
@@ -145,9 +153,19 @@ function newYouTubePlay() {
 function onPlayerStateChange(event) {
 	if (event.data == YT.PlayerState.ENDED) {
 		$("#"+topdist).html(shortcut[topdist]);
-		$("#"+(topdist+1)).html(playhtml[topdist+1]);
+		playing[topdist] = false;		
 		topdist++;
+		$("#"+(topdist)).find(".shortcut").html(playhtml[topdist]);
+		playing[topdist] = true;
 		newYouTubePlay();
+		waveon();
+	}else
+	if (event.data == YT.PlayerState.PLAYING) {
+		playing[topdist] = true;
+		waveon();
+	}else
+	if (event.data == YT.PlayerState.PAUSED) {
+		playing[topdist] = false;
 	}
 }
 </script>

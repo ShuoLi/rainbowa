@@ -1,4 +1,6 @@
+
 <div id="base"></div>
+
 <script>
 var times = new Array();
 var shortcut = new Array();
@@ -13,6 +15,8 @@ var beginAnimeTime=300;
 var endAnimeTime=300;
 var videoDist = 230;
 var playing = new Array();
+var player;
+
 <% @timeline.events.each do |event| %>
 times[maxNumber] = '<%= event.time.to_s %>';
 dess[maxNumber]='<%=escape_javascript event.description %>';
@@ -22,6 +26,7 @@ maxNumber++;
 for(k=0;k<maxNumber;k++){
 	playing[k]=false;
 }
+
 var maxLength=videoDist*maxNumber;
 $('<div id="spur"></div>').appendTo("body");
 $("#spur").css("height",videoDist*maxNumber+"px");
@@ -42,16 +47,17 @@ for(var j=0;j<maxNumber;j++){
 	var pic='http://img.youtube.com/vi/'+videos[j]+'/hqdefault.jpg';
 	var embeded='http://www.youtube.com/embed/'+videos[j];
 	shortcut[j]='<div id='+j+' class="shortcut"><img src="'+pic+'" height="214px" width="379px" position="absolute" top="0px" left="10px"></img></div>';
-	playhtml[j]='<iframe width="403px" height="227px" src="'+
+	playhtml[j]='<iframe id="player" width="403px" height="227px" src="'+
 	embeded+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
 	$("#"+j).html(shortcut[j]);
 	$("#"+j).append("<div>"+embeded+"</div><div class='describ'>"+dess[j]+"</div>");
 	length+=videoDist;
 }
-$(".shortcut").click(function() {
-	var temp=$(this).attr("id");
-	$(this).html(playhtml[temp]);
-});
+
+// $(".shortcut").click(function() {
+// 	var temp=$(this).attr("id");
+// 	stopVideo()
+// });
 //the loop to build the rainbow
 for(i=100;i<maxLength+100;i+=dist){
 	var iterator=i-100;
@@ -86,17 +92,25 @@ $("#spur").click(function(e){
 		}
 	}
 	waveon();
+	setTimeout("newYouTubePlay()",1000);
+	// var tag = document.createElement('script');	
+		// tag.src = "http://www.youtube.com/player_api";
+		// var firstScriptTag = document.getElementsByTagName('script')[0];
+		// firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 });
 
 function waveon(){
-		var waveid=-100-videoDist*topdist-Math.floor(Math.random()*(videoDist+1));
-		wavein(waveid);
-		waveout(waveid);
-		if(playing[topdist]==false){
-			return false;
-		}
-		setTimeout("waveon()",10);
+	var waveid=-100-videoDist*topdist-Math.floor(Math.random()*(videoDist+1));
+	wavein(waveid);
+	waveout(waveid);
+	if(playing[topdist]==false){
+		return false;
+	}
+	setTimeout("waveon()",20);
 }
+
+
+
 
 function wavein(idtemp){
 	$("#"+idtemp).animate({width:"60px",
@@ -119,5 +133,21 @@ function waveout(idtemp){
 	$("#"+(idtemp-dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
 	$("#"+(idtemp+2*dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
 	$("#"+(idtemp-2*dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
+}
+
+function newYouTubePlay() {
+	player = new YT.Player('player', {
+		events: {
+			'onStateChange': onPlayerStateChange
+		}
+	});
+}
+function onPlayerStateChange(event) {
+	if (event.data == YT.PlayerState.ENDED) {
+		$("#"+topdist).html(shortcut[topdist]);
+		$("#"+(topdist+1)).html(playhtml[topdist+1]);
+		topdist++;
+		newYouTubePlay();
+	}
 }
 </script>

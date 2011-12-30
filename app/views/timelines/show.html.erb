@@ -1,9 +1,5 @@
 
 <div id="base"></div>
-<%= image_tag "play.png", :size => "40x40", :alt => "play", :id => "play_button" %>
-<%= image_tag "stop.png", :size => "40x40", :alt => "stop", :id => "stop_play_button" %>
-<%= image_tag "up.png", :size => "40x40", :alt => "last", :id => "play_last_button" %>
-<%= image_tag "down.png", :size => "40x40", :alt => "next", :id => "play_next_button" %>
 <%= image_tag "shuffle.png", :size => "40x40", :alt => "shuffle", :id => "shuffle_play_button" %>
 
 
@@ -19,9 +15,10 @@ var idtemp=0;
 var dist=5;
 var beginAnimeTime=300;
 var endAnimeTime=300;
-var videoDist = 230;
+var videoDist = 200;
 var playing = new Array();
 var player;
+var stateShuffle = false;
 
 <% @timeline.events.each do |event| %>
 times[maxNumber] = '<%= event.time.to_s %>';
@@ -91,9 +88,7 @@ $("#spur").click(function(e){
 			else
 			$("#"+k).html(shortcut[topdist]);
 		}else{
-			console.log("inn");
 			if(playing[k]==true){
-				console.log("in");
 				playing[k]=false;
 				$("#"+k).html(shortcut[k]);
 			}
@@ -152,20 +147,38 @@ function newYouTubePlay() {
 }
 function onPlayerStateChange(event) {
 	if (event.data == YT.PlayerState.ENDED) {
+		if(stateShuffle == true){
+			var index = Math.floor(Math.random()*(maxNumber));
+			playNextVideo(index);
+		}else{
+			playNextVideo(topdist+1);			
+		}
+	}else{
+		if (event.data == YT.PlayerState.PLAYING) {
+			playing[topdist] = true;
+			waveon();
+		}
+		if (event.data == YT.PlayerState.PAUSED) {
+			playing[topdist] = false;
+		}
+	}
+}
+</script>
+
+<script>
+	$("#shuffle_play_button").click(function(){
+		stateShuffle = true;
+		var index = Math.floor(Math.random()*(maxNumber));
+		playNextVideo(index);
+	});
+	function playNextVideo(index){// play next video of index
 		$("#"+topdist).html(shortcut[topdist]);
 		playing[topdist] = false;		
-		topdist++;
+		topdist = index;
 		$("#"+(topdist)).find(".shortcut").html(playhtml[topdist]);
 		playing[topdist] = true;
 		newYouTubePlay();
 		waveon();
-	}else
-	if (event.data == YT.PlayerState.PLAYING) {
-		playing[topdist] = true;
-		waveon();
-	}else
-	if (event.data == YT.PlayerState.PAUSED) {
-		playing[topdist] = false;
+		$('html, body').animate({ scrollTop: (100+110+(topdist-1)*videoDist)+"px" }, 'slow');
 	}
-}
 </script>

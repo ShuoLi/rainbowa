@@ -8,7 +8,7 @@ background-color:black;
 	color:white;
 	font-size:11px;
 	width:411px;
-	height:395px;
+	height:300px;
 }
 }
 
@@ -54,7 +54,7 @@ background-color:black;
 
 .describ{
 	height:168px;
-	width:403px;
+	width:70;
 	overflow:auto;
  }
 
@@ -70,24 +70,8 @@ color:black;
 }
 
 /* css for player button groups */
-#play_button{
+#shuffle_play_button{
 	position: fixed;
 	right: 0px;
-	bottom: 250px;
-}
-#play_last_button{
-	@extend #play_button;
-	bottom: 200px;
-}
-#play_next_button{
-	@extend #play_button;
-	bottom: 150px;
-}
-#stop_play_button{
-	@extend #play_button;
-	bottom: 100px;
-}
-#shuffle_play_button{
-	@extend #play_button;
-	bottom: 50px;
+	bottom: 0px;
 }

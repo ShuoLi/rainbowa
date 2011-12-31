@@ -26,6 +26,11 @@
 
 <div class="home_middle">
 	<%= image_tag "facebook.png", :size => "173x29", :alt => "facebook", :id => "fb_login" %>
+	<% if current_user %>
+		<a href="<%= new_timeline_path %>">
+			<%= button_tag "new timeline" %>
+		</a>
+	<% end %>
 </div>
 <script>
 // setup fb connect position

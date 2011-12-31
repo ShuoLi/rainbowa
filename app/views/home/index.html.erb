@@ -1,4 +1,7 @@
-
+<script>
+//set home page background color to blue
+	$("body").css("background-color","#6FBBFC");
+</script>
 <div class="home_head">
 </div>
 <script>
@@ -25,13 +28,15 @@
 </script>
 
 <div class="home_middle">
-	<%= image_tag "facebook.png", :size => "173x29", :alt => "facebook", :id => "fb_login" %>
 	<% if current_user %>
 		<a href="<%= new_timeline_path %>">
 			<%= button_tag "new timeline" %>
 		</a>
+	<% else %>
+		<%= image_tag "facebook.png", :size => "173x29", :alt => "facebook", :id => "fb_login" %>
 	<% end %>
 </div>
+
 <script>
 // setup fb connect position
 	$(".home_middle").css("margin-top",40+"px");	

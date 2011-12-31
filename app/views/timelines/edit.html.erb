@@ -3,13 +3,14 @@
 
 <%= render "events/newevent" %>
 
-<div id="profile"> 
+<div id="profile">
 	<div id="profilePic"><img src="<%= @timeline.photo %>"/></div>
 	<div id="editProfilePic"><%= best_in_place @timeline, :photo %></div>
 	
 	<div id="profileName"><%= @timeline.subject %><div>
 	<div id="profileDes"><%= best_in_place @timeline, :description, type: :textarea %><div>
 
+	<div id="editBackground">Change background image(link): <%= best_in_place @timeline, :background %></div>
 </div>
 <%= image_tag "shuffle.png", :size => "40x40", :alt => "shuffle", :id => "shuffle_play_button" %>
 

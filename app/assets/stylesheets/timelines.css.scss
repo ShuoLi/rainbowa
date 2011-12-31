@@ -5,10 +5,11 @@
 body{
 background-color:black;
 .event{
+	position:absolute;
 	color:white;
 	font-size:11px;
 	width:411px;
-	height:300px;
+	height:400px;
 }
 }
 
@@ -23,7 +24,7 @@ background-color:black;
 #spur{
 	position:absolute;
 	background-color:black;
-	top:100px;
+	top:150px;
 	width:24px;
 	left:488px;
 	z-index:-1;
@@ -74,4 +75,53 @@ color:black;
 	position: fixed;
 	right: 0px;
 	bottom: 0px;
+}
+
+#profile{
+	position:absolute;
+	top:37px;
+	left:0px;
+	width:800px;
+	height:110px;
+#profileName{
+	position:absolute;
+	opacity:0.6;
+	top:0px;
+	left:225px;
+	height:20px;
+	width:575px;
+	color:LIGHTBLUE;
+	font-size:20px;
+font-style: oblique;
+font-weight: 50;
+font-family: cursive; 
+}
+#profilePic{
+	background-color:white;
+	position:absolute;
+	top:0px;
+	left:70px;
+	height:110px;
+	width:147px;
+	border-style:solid;
+	border-width:1px;
+	border-color:Gold;
+}
+#profileDes{
+	background-color:PaleGoldenRod ;
+	color:black;
+	opacity:1.0;
+	position:absolute;
+	top:30px;
+	left:1px;
+	height:76px;
+	width:575px;
+	font-size:15px;
+	font-style: normal;
+	font-weight: 100;
+	font-family:"Times New Roman",Georgia,Serif;
+	border-style:solid;
+	border-width:3px;
+	border-color:Turquoise ;
+}
 }

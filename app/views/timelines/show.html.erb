@@ -1,7 +1,10 @@
+<div id="profile"> 
+	<div id="profilePic"><img src="http://www.shockya.com/news/wp-content/uploads/lady-gaga-lawsuit.png" height="110px" width="147px"/></div>
+	<div id="profileName">Lady GAGA<div>
+	<div id="profileDes">One of the best singer, born on March 28, 1986. Her most famous song is poker face and Bad Romance. <div>
 
-<div id="base"></div>
+</div>
 <%= image_tag "shuffle.png", :size => "40x40", :alt => "shuffle", :id => "shuffle_play_button" %>
-
 
 <script>
 var times = new Array();
@@ -19,6 +22,7 @@ var videoDist = 200;
 var playing = new Array();
 var player;
 var stateShuffle = false;
+var headerSpace =150;
 
 <% @timeline.events.each do |event| %>
 times[maxNumber] = '<%= event.time.to_s %>';
@@ -33,11 +37,10 @@ for(k=0;k<maxNumber;k++){
 var maxLength=videoDist*maxNumber;
 $('<div id="spur"></div>').appendTo("body");
 $("#spur").css("height",videoDist*maxNumber+"px");
-var length=100;
+var length=113;
 //get all events
 for(var j=0;j<maxNumber;j++){
-	$("#base").append("<div id='"+j+"' class='event'></div>");
-	$("#"+j).css("position","absolute");
+	$("#profile").append("<div id='"+j+"' class='event'></div>");
 	$("#"+j).css("top",length+"px");
 	/!--random the position part-/
 	if(lr==true){
@@ -49,21 +52,16 @@ for(var j=0;j<maxNumber;j++){
 	//assign the event content
 	var pic='http://img.youtube.com/vi/'+videos[j]+'/hqdefault.jpg';
 	var embeded='http://www.youtube.com/embed/'+videos[j];
-	shortcut[j]='<div id='+j+' class="shortcut"><img src="'+pic+'" height="214px" width="379px" position="absolute" top="0px" left="10px"></img></div>';
+	shortcut[j]='<div id='+j+' class="shortcut"><img src="'+pic+'" height="227px" width="403px" position="absolute" top="0px" left="10px"></img></div>';
 	playhtml[j]='<iframe id="player" width="403px" height="227px" src="'+
 	embeded+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
 	$("#"+j).html(shortcut[j]);
 	$("#"+j).append("<div>"+embeded+"</div><div class='describ'>"+dess[j]+"</div>");
 	length+=videoDist;
 }
-
-// $(".shortcut").click(function() {
-// 	var temp=$(this).attr("id");
-// 	stopVideo()
-// });
 //the loop to build the rainbow
-for(i=100;i<maxLength+100;i+=dist){
-	var iterator=i-100;
+for(i=headerSpace;i<maxLength+headerSpace;i+=dist){
+	var iterator=i-headerSpace;
 	$("#spur").append("<div class='ruler' id='-"+i+"'><div class='innerRuler'></div></div>");
 	$('#-'+i).css("top",iterator);
 }
@@ -78,7 +76,7 @@ function(){
 //the click funtion of the spur
 var topdist=0;
 $("#spur").click(function(e){
-	topdist=parseInt((e.pageY-100)/videoDist);
+	topdist=parseInt((e.pageY-headerSpace)/videoDist);
 	
 	for(k=0;k<maxNumber;k++){
 		if(k==topdist){
@@ -96,24 +94,17 @@ $("#spur").click(function(e){
 	}
 	waveon();
 	setTimeout("newYouTubePlay()",1000);
-	// var tag = document.createElement('script');	
-		// tag.src = "http://www.youtube.com/player_api";
-		// var firstScriptTag = document.getElementsByTagName('script')[0];
-		// firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 });
 
 function waveon(){
-	var waveid=-100-videoDist*topdist-Math.floor(Math.random()*(videoDist+1));
+	var waveid=-headerSpace-videoDist*topdist-Math.floor(Math.random()*(videoDist+1));
 	wavein(waveid);
 	waveout(waveid);
 	if(playing[topdist]==false){
 		return false;
 	}
-	setTimeout("waveon()",20);
+	setTimeout("waveon()",10);
 }
-
-
-
 
 function wavein(idtemp){
 	$("#"+idtemp).animate({width:"60px",
@@ -179,6 +170,6 @@ function onPlayerStateChange(event) {
 		playing[topdist] = true;
 		newYouTubePlay();
 		waveon();
-		$('html, body').animate({ scrollTop: (100+110+(topdist-1)*videoDist)+"px" }, 'slow');
+		$('html, body').animate({ scrollTop: (headerSpace+110+(topdist-1)*videoDist)+"px" }, 'slow');
 	}
 </script>

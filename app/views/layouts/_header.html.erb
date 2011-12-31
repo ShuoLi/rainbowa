@@ -1,0 +1,27 @@
+<header>
+<% if current_user %>
+<div id="userName">
+	<div id="logo" class="headerButton">logo</div>
+	<div id="search" class="headerButton">
+		<div id="searchInput"><input type="text"  placeholder="Search" size="35"/></div>
+		<div id="searchConfirm">
+		<%= image_tag "search.png", :size => "16x16"%>
+		</div>
+	</div>
+	<div id="userState" class="headerButton"><%= current_user.name %></div>
+	<div id="else" class="headerButton"><%= link_to "Sign Out", signout_path %></div>
+</div>
+</div>
+ 
+<% else %>
+  <%= link_to "Sign in with Facebook", "/auth/facebook" %>
+<% end %>
+</header>
+
+<script>
+	$(".headerButton").hover(function(){
+		$(this).css("background-color","FireBrick");
+	},function(){
+		$(this).css("background-color","DarkRed");
+	});
+</script>

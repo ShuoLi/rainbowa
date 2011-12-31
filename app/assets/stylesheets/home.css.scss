@@ -2,12 +2,22 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.home_logo{
+	text-align: center;
+}
+
 .home_motto{
 	font-family:sans-serif;font-weight:bold;	
+	text-align: center;
+}
+
+.home_middle{
+	text-align: center;
+	
 }
 
 #gallery{
+	position: absolute;
 	font-family:sans-serif;font-weight:bold;
-	width:110%;
 	overflow:hidden;
 }

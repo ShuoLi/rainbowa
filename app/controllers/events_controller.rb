@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  respond_to :html, :json
+  
   def create
     # puts params[:event]
     ep = params[:event]
@@ -17,6 +19,9 @@ class EventsController < ApplicationController
   end
 
   def update
+    @event = Event.find(params[:id])
+    @event.update_attributes(params[:event])
+    respond_with @event
   end
 
   def index

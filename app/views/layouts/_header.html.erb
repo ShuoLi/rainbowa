@@ -5,7 +5,7 @@
 	<div id="search" class="headerButton">
 		<div id="searchInput"><input type="text"  placeholder="Search" size="30"/></div>
 	</div>
-	<div id="userState" class="headerButton"><%= current_user.name %></div>
+	<div id="userState" class="headerButton"><%= current_user.name.split(" ").first %></div>
 	<div id="signout" class="headerButton"><%= link_to "Sign Out", signout_path %></div>
 </div>
 </div>
@@ -31,8 +31,8 @@
 	$("#signin").hover(function(){
 		$(this).css("right","82px");
 		$(this).css("top","2px");		
-		$(this).css("box-shadow","10px 10px 20px #000");
-		$(this).css("-webkit-box-shadow","10px 10px 20px #000");
+		$(this).css("box-shadow","8px 3px 20px white");
+		$(this).css("-webkit-box-shadow","8px 3px 20px white");
 	},function(){
 		$(this).css("right","80px");
 		$(this).css("top","0px");		

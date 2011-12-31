@@ -1,5 +1,5 @@
 
-<div id="editPanel">
+<div id="newEventPanel">
 <% if current_user %>
 <span>new event</span>
 <%= form_for(@event, :html => { :class => "new_event", :multipart => true}) do |e| %>
@@ -8,13 +8,13 @@
 <%#= e.hidden_field :time, :value => "123" %>
 
 <%= e.label :time, "time" %>
-<%= e.text_field :time %><br>
+<%= e.text_field :time , :size=>"30"%><br>
 
 <%= e.label :video, "video" %>
-<%= e.text_field :video %><br>
+<%= e.text_field :video, :size=>"29" %><br>
 
-<%= e.label :description, "description" %>
-<%= e.text_field :description %><br>
+<%= e.label :description, "description" %><br>
+<%= e.text_area :description, :cols => 30, :rows => 3 %><br>
 
 <%= e.submit "post" %>
 
@@ -23,3 +23,8 @@
 </div>
 
 <% end %>
+
+
+<script>
+	$('#event_time').datepicker({ dateFormat: "yy-mm-dd"});
+</script>

@@ -1,4 +1,6 @@
 class TimelinesController < ApplicationController
+  respond_to :html, :json
+  
   def create
     @timeline = Timeline.create(params[:timeline])
     follow = @timeline.follows.find_by_user_id(current_user.id)
@@ -10,8 +12,16 @@ class TimelinesController < ApplicationController
 
   def destroy
   end
+  
+  def edit
+    @timeline = Timeline.find(params[:id])
+    @event = Event.new
+  end
 
   def update
+    @timeline = Timeline.find(params[:id])
+    @timeline.update_attributes(params[:timeline])
+    respond_with @timeline
   end
 
   def index
@@ -20,7 +30,6 @@ class TimelinesController < ApplicationController
 
   def show
     @timeline = Timeline.find(params[:id])
-    @event = Event.new
   end
 
   def new

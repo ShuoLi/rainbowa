@@ -1,10 +1,14 @@
 <br>
-<%= link_to "edit rainbow", edit_timeline_path %>
+<%= link_to "show rainbow", timeline_path %>
+
+<%= render "events/newevent" %>
 
 <div id="profile"> 
-	<div id="profilePic"><img src="http://www.shockya.com/news/wp-content/uploads/lady-gaga-lawsuit.png" height="110px" width="147px"/></div>
+	<div id="profilePic"><img src="<%= @timeline.photo %>"/></div>
+	<div id="editProfilePic"><%= best_in_place @timeline, :photo %></div>
+	
 	<div id="profileName"><%= @timeline.subject %><div>
-	<div id="profileDes"><%= @timeline.description %><div>
+	<div id="profileDes"><%= best_in_place @timeline, :description, type: :textarea %><div>
 
 </div>
 <%= image_tag "shuffle.png", :size => "40x40", :alt => "shuffle", :id => "shuffle_play_button" %>
@@ -15,6 +19,7 @@ var shortcut = new Array();
 var playhtml = new Array();
 var dess = new Array();
 var videos=new Array();
+var videosText=new Array();
 var lr=true;//0-left 1-right
 var maxNumber=0;
 var idtemp=0;
@@ -28,9 +33,10 @@ var stateShuffle = false;
 var headerSpace =150;
 
 <% @timeline.events.each do |event| %>
-times[maxNumber] = '<%= event.time.to_s %>';
-dess[maxNumber]='<%=escape_javascript event.description %>';
-videos[maxNumber]='<%=event.video%>';
+times[maxNumber] = "<%= best_in_place(event, :time) %>";
+dess[maxNumber]="<%=escape_javascript best_in_place(event, :description, type: :textarea) %>";
+videos[maxNumber]="<%=event.video%>";
+videosText[maxNumber]="<%= best_in_place event, :video %>";
 maxNumber++;
 <% end %>
 for(k=0;k<maxNumber;k++){
@@ -55,7 +61,7 @@ for(var j=0;j<maxNumber;j++){
 	//assign the event content
 	var pic='http://img.youtube.com/vi/'+videos[j]+'/hqdefault.jpg';
 	var embeded='http://www.youtube.com/embed/'+videos[j];
-	shortcut[j]='<div id='+j+' class="shortcut"><img src="'+pic+'" height="227px" width="403px" position="absolute" top="0px" left="10px"></img></div>';
+	shortcut[j]='<div class="date_area">'+times[j]+'</div><div id='+j+' class="shortcut"><img src="'+pic+'" height="227px" width="403px" position="absolute" top="0px" left="10px"></img></div>';
 	playhtml[j]='<iframe id="player" width="403px" height="227px" src="'+
 	embeded+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
 	$("#"+j).html(shortcut[j]);

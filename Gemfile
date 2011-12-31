@@ -24,6 +24,9 @@ gem 'jquery-rails'
 # gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 
+# edit in place for edit timeline
+gem 'best_in_place'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

@@ -1,47 +1,70 @@
+
+<div class="home_head">
+</div>
+<script>
+// calculate window dimentions
+	var winHeight = $(window).height();
+	var winWidth = $(window).width();
+</script>
+
 <div class="home_logo">
 	<%= image_tag "logo.png", :size => "570x112", :alt => "Rainbowa", :id => "logo_img" %>
 </div>
+<script>
+// setup logo position
+	$(".home_logo").css("margin-top",winHeight/2-250+"px");	
+</script>
 
 <div class="home_motto">
-<p>Coolest Video Rainbow Encyclopedia.</p>
-<p>Play it, Follow it, Contribute to it.</p>
+	<p>Coolest Video Rainbow Encyclopedia.</p>
+	<p>Play it, Follow it, Contribute to it.</p>
 </div>
+<script>
+// setup motto position
+	$(".home_motto").css("margin-top",20+"px");	
+</script>
 
 <div class="home_middle">
-	
+	<%= image_tag "facebook.png", :size => "173x29", :alt => "facebook", :id => "fb_login" %>
 </div>
+<script>
+// setup fb connect position
+	$(".home_middle").css("margin-top",40+"px");	
+</script>
 
 <div id="gallery" >
 </div>
-<link rel="stylesheet" href="jquery.image-gallery.min.css">
-<script src="jquery.image-gallery.min.js"></script>
+
 <script type="text/javascript">
-$(function () {	
-	
-	
-    // Load images via flickr for demonstration purposes:
-    $.ajax({
-        url: 'http://api.flickr.com/services/rest/',
-        data: {
-            format: 'json',
-            method: 'flickr.interestingness.getList',
-            api_key: '7617adae70159d09ba78cfec73c13be3'
-        },
-	    dataType: 'jsonp',
-      jsonp: 'jsoncallback',
-	    success: function (data) {
-            $.each(data.photos.photo, function (index, photo) {
-                var url = 'http://farm' + photo.farm + '.static.flickr.com/' +
-                    photo.server + '/' + photo.id + '_' + photo.secret;
-                $('<a rel="gallery"></a>')
-                    .append($('<img>').prop('src', url + '_s.jpg'))
-                    .prop('href', url + '_b.jpg')
-                    .prop('title', photo.title)
-                    .appendTo('#gallery');
-            });
-        }
-    });
-		
-		
+$(function () {
+	var photoSide = winWidth/15;
+	var galleryHeight = winWidth/5;
+	$("#gallery").css("width",winWidth+"px");
+	$("#gallery").css("height",galleryHeight+"px");
+	$("#gallery").css("left","0px");	
+	$("#gallery").css("margin-top","50px");	
+	$.ajax({
+		url: 'http://api.flickr.com/services/rest/',
+		data: {
+			format: 'json',
+			method: 'flickr.interestingness.getList',
+			api_key: '7617adae70159d09ba78cfec73c13be3'
+		},
+		dataType: 'jsonp',
+		jsonp: 'jsoncallback',
+		success: function (data) {
+			$.each(data.photos.photo, function (index, photo) {
+				var url = 'http://farm' + photo.farm + '.static.flickr.com/' +
+				photo.server + '/' + photo.id + '_' + photo.secret;
+				$('<a rel="gallery"></a>')
+				.append($('<img height="'+photoSide+'px" width="'+photoSide+'px">').prop('src', url + '_s.jpg'))
+				.prop('href', url + '_b.jpg')
+				.prop('title', photo.title)
+				.appendTo('#gallery');
+			});
+		}
+	});
+
+
 });
 </script>

@@ -32,10 +32,25 @@ var player;
 var stateShuffle = false;
 var headerSpace =150;
 
+function getVideoId(url){
+    if(url.indexOf('?') != -1 ) {
+        var query = decodeURI(url).split('?')[1];
+        var params = query.split('&');
+        for(var i=0,l = params.length;i<l;i++)
+            if(params[i].indexOf('v=') === 0)
+                return params[i].replace('v=','');
+    } else if (url.indexOf('youtu.be') != -1) {
+        return decodeURI(url).split('youtu.be/')[1];
+    }
+    return null;
+}
+// var urlLONG = "http://www.youtube.com/watch?v=UF8uR6Z6KLc&feature=feedlik";
+// var urlSHORT = "http://youtu.be/UF8uR6Z6KLc";
+
 <% @timeline.events.each do |event| %>
 times[maxNumber] = "<%= best_in_place(event, :time) %>";
 dess[maxNumber]="<%=escape_javascript best_in_place(event, :description, type: :textarea) %>";
-videos[maxNumber]="<%=event.video%>";
+videos[maxNumber]= getVideoId('<%= event.video %>');
 videosText[maxNumber]="<%= best_in_place event, :video %>";
 maxNumber++;
 <% end %>
@@ -65,7 +80,7 @@ for(var j=0;j<maxNumber;j++){
 	playhtml[j]='<iframe id="player" width="403px" height="227px" src="'+
 	embeded+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
 	$("#"+j).html(shortcut[j]);
-	$("#"+j).append("<div>"+embeded+"</div><div class='describ'>"+dess[j]+"</div>");
+	$("#"+j).append("<div>"+videosText[j]+"</div><div class='describ'>"+dess[j]+"</div>");
 	length+=videoDist;
 }
 //the loop to build the rainbow

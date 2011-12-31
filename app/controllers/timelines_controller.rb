@@ -14,8 +14,12 @@ class TimelinesController < ApplicationController
   end
   
   def edit
-    @timeline = Timeline.find(params[:id])
-    @event = Event.new
+    if current_user
+      @timeline = Timeline.find(params[:id])
+      @event = Event.new
+    else
+      redirect_to root_path
+    end
   end
 
   def update

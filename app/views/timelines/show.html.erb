@@ -2,7 +2,7 @@
 <%= link_to "edit rainbow", edit_timeline_path %>
 
 <div id="profile"> 
-	<div id="profilePic"><img src="http://www.shockya.com/news/wp-content/uploads/lady-gaga-lawsuit.png" height="110px" width="147px"/></div>
+	<div id="profilePic"><img src="<%= @timeline.photo %>"/></div>
 	<div id="profileName"><%= @timeline.subject %><div>
 	<div id="profileDes"><%= @timeline.description %><div>
 
@@ -27,10 +27,23 @@ var player;
 var stateShuffle = false;
 var headerSpace =150;
 
+function getVideoId(url){
+    if(url.indexOf('?') != -1 ) {
+        var query = decodeURI(url).split('?')[1];
+        var params = query.split('&');
+        for(var i=0,l = params.length;i<l;i++)
+            if(params[i].indexOf('v=') === 0)
+                return params[i].replace('v=','');
+    } else if (url.indexOf('youtu.be') != -1) {
+        return decodeURI(url).split('youtu.be/')[1];
+    }
+    return null;
+}
+
 <% @timeline.events.each do |event| %>
 times[maxNumber] = '<%= event.time.to_s %>';
 dess[maxNumber]='<%=escape_javascript event.description %>';
-videos[maxNumber]='<%=event.video%>';
+videos[maxNumber]= getVideoId('<%=event.video%>');
 maxNumber++;
 <% end %>
 for(k=0;k<maxNumber;k++){
@@ -55,11 +68,11 @@ for(var j=0;j<maxNumber;j++){
 	//assign the event content
 	var pic='http://img.youtube.com/vi/'+videos[j]+'/hqdefault.jpg';
 	var embeded='http://www.youtube.com/embed/'+videos[j];
-	shortcut[j]='<div id='+j+' class="shortcut"><img src="'+pic+'" height="227px" width="403px" position="absolute" top="0px" left="10px"></img></div>';
+	shortcut[j]='<div class="date_area">'+times[j]+'</div><div id='+j+' class="shortcut"><img src="'+pic+'" height="227px" width="403px" position="absolute" top="0px" left="10px"></img></div>';
 	playhtml[j]='<iframe id="player" width="403px" height="227px" src="'+
 	embeded+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
 	$("#"+j).html(shortcut[j]);
-	$("#"+j).append("<div>"+embeded+"</div><div class='describ'>"+dess[j]+"</div>");
+	$("#"+j).append("<div class='describ'>"+dess[j]+"</div>");
 	length+=videoDist;
 }
 //the loop to build the rainbow

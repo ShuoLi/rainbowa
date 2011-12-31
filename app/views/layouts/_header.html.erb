@@ -3,25 +3,40 @@
 <div id="userName">
 	<div id="logo" class="headerButton">logo</div>
 	<div id="search" class="headerButton">
-		<div id="searchInput"><input type="text"  placeholder="Search" size="35"/></div>
-		<div id="searchConfirm">
-		<%= image_tag "search.png", :size => "16x16"%>
-		</div>
+		<div id="searchInput"><input type="text"  placeholder="Search" size="30"/></div>
 	</div>
 	<div id="userState" class="headerButton"><%= current_user.name %></div>
-	<div id="else" class="headerButton"><%= link_to "Sign Out", signout_path %></div>
+	<div id="signout" class="headerButton"><%= link_to "Sign Out", signout_path %></div>
 </div>
 </div>
  
 <% else %>
-  <%= link_to "Sign in with Facebook", "/auth/facebook" %>
+<div id="userName">
+	<div id="logo" class="headerButton">logo</div>
+	<div id="search" class="headerButton">
+		<div id="searchInput"><input type="text"  placeholder="Search" size="35"/></div>
+	</div>
+	<div id="signin"><%= link_to image_tag("facebook_32.png", :size => "19x19") , "/auth/facebook" %></div>
+</div>
+</div>
 <% end %>
 </header>
 
 <script>
 	$(".headerButton").hover(function(){
-		$(this).css("background-color","FireBrick");
+				$(this).css("background-color","FireBrick");
+			},function(){
+				$(this).css("background-color","DarkRed");
+			});
+	$("#signin").hover(function(){
+		$(this).css("right","82px");
+		$(this).css("top","2px");		
+		$(this).css("box-shadow","10px 10px 20px #000");
+		$(this).css("-webkit-box-shadow","10px 10px 20px #000");
 	},function(){
-		$(this).css("background-color","DarkRed");
+		$(this).css("right","80px");
+		$(this).css("top","0px");		
+		$(this).css("box-shadow","none");
+		$(this).css("-webkit-box-shadow","none");
 	});
 </script>

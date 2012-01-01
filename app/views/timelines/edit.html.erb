@@ -7,189 +7,194 @@
 	<% if @timeline.photo %>
 	<div id="profilePic"><img src="<%= @timeline.photo %>"/></div>
 	<script>
-		$("#profilePic").css("background-image","none");
+	$("#profilePic").css("background-image","none");
 	</script>
 	<% else %>
 	<div id="profilePic"><img src=""/></div>
 	<% end %>
 	<div id="editProfilePic"><%= best_in_place @timeline, :photo %></div>
-	<div id="profileName"><%= @timeline.subject %>
-	<div id="profileDes"><%= best_in_place @timeline, :description, type: :textarea %></div></div>
-
-	<div id="editBackground">Change background image(link): <%= best_in_place @timeline, :background %></div>
+	<div id="profileName"><%= @timeline.subject %></div>
+	<div id="profileDes"><%= best_in_place @timeline, :description, type: :textarea %></div>
 </div>
-<%= image_tag "shuffle.png", :size => "40x40", :alt => "shuffle", :id => "shuffle_play_button" %>
+	<div id="editBackground">background(url)</div><div id="show"><%= best_in_place @timeline, :background %></div>
 
-<script>
-var times = new Array();
-var shortcut = new Array();
-var playhtml = new Array();
-var dess = new Array();
-var videos=new Array();
-var videosText=new Array();
-var lr=true;//0-left 1-right
-var maxNumber=0;
-var idtemp=0;
-var dist=5;
-var beginAnimeTime=300;
-var endAnimeTime=300;
-var videoDist = 227;
-var playing = new Array();
-var player;
-var stateShuffle = false;
-var headerSpace =80;
+	<%= image_tag "shuffle.png", :size => "40x40", :alt => "shuffle", :id => "shuffle_play_button" %>
 
-function getVideoId(url){
-    if(url.indexOf('?') != -1 ) {
-        var query = decodeURI(url).split('?')[1];
-        var params = query.split('&');
-        for(var i=0,l = params.length;i<l;i++)
-            if(params[i].indexOf('v=') === 0)
-                return params[i].replace('v=','');
-    } else if (url.indexOf('youtu.be') != -1) {
-        return decodeURI(url).split('youtu.be/')[1];
-    }
-    return null;
-}
-// var urlLONG = "http://www.youtube.com/watch?v=UF8uR6Z6KLc&feature=feedlik";
-// var urlSHORT = "http://youtu.be/UF8uR6Z6KLc";
-
-<% @timeline.events.each do |event| %>
-times[maxNumber] = "<%= best_in_place(event, :time) %>";
-dess[maxNumber]="<%=escape_javascript best_in_place(event, :description, type: :textarea) %>";
-videos[maxNumber]= getVideoId('<%= event.video %>');
-videosText[maxNumber]="<%= best_in_place event, :video %>";
-maxNumber++;
-<% end %>
-for(k=0;k<maxNumber;k++){
-	playing[k]=false;
-}
-
-$("body").css("background-image","url('http://shadowness.com/file/item3/60128/image_t6.jpg')");
-var maxLength=videoDist*maxNumber;
-$('<div id="spur"></div>').appendTo("body");
-$("#spur").css("height",videoDist*maxNumber+"px");
-$("#spur").css("top",headerSpace+"px");
-var length=headerSpace;
-//get all events
-for(var j=0;j<maxNumber;j++){
-	$("#profile").append("<div id='"+j+"' class='event'></div>");
-	$("#"+j).css("top",length+"px");
-	/!--random the position part-/
-	if(lr==true){
-		$("#"+j).css("left","538px");
-	}else{
-		$("#"+j).css("left","59px");
-	}
-	lr=!lr;
-	//assign the event content
-	var pic='http://img.youtube.com/vi/'+videos[j]+'/hqdefault.jpg';
-	var embeded='http://www.youtube.com/embed/'+videos[j];
-	shortcut[j]='<div class="date_area">'+times[j]+'</div><div id='+j+' class="shortcut"><img src="'+pic+'" height="227px" width="403px" position="absolute" top="0px" left="10px"></img></div>';
-	playhtml[j]='<iframe id="player" width="403px" height="227px" src="'+
-	embeded+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
-	$("#"+j).html(shortcut[j]);
-	$("#"+j).append("<div>"+videosText[j]+"</div><div class='describ'>"+dess[j]+"</div>");
-	length+=videoDist;
-}
-//the loop to build the rainbow
-for(i=headerSpace;i<maxLength+headerSpace;i+=dist){
-	var iterator=i-headerSpace;
-	$("#spur").append("<div class='ruler' id='-"+i+"'><div class='innerRuler'></div></div>");
-	$('#-'+i).css("top",iterator);
-}
-//rainbow hover function
-$(".ruler").hover(function(){
-	idtemp=parseInt($(this).attr("id"));
-	wavein(idtemp);
-},
-function(){
-	waveout(idtemp);
-});	
-//the click funtion of the spur
-var topdist=0;
-$("#spur").click(function(e){
-	topdist=parseInt((e.pageY-headerSpace)/videoDist);
+	<script>
+	var times = new Array();
+	var shortcut = new Array();
+	var playhtml = new Array();
+	var dess = new Array();
+	var videos=new Array();
+	var videosText=new Array();
+	var lr=true;//0-left 1-right
+	var maxNumber=0;
+	var idtemp=0;
+	var dist=5;
+	var beginAnimeTime=300;
+	var endAnimeTime=300;
+	var videoDist = 227;
+	var playing = new Array();
+	var player;
+	var stateShuffle = false;
+	var headerSpace =80;
+	$("#editBackground,#show").hover(function(){
+		$("#show").css("visibility","visible");
+	},function(){
+		$("#show").css("visibility","hidden");
+	});
 	
+	function getVideoId(url){
+		if(url.indexOf('?') != -1 ) {
+			var query = decodeURI(url).split('?')[1];
+			var params = query.split('&');
+			for(var i=0,l = params.length;i<l;i++)
+			if(params[i].indexOf('v=') === 0)
+			return params[i].replace('v=','');
+		} else if (url.indexOf('youtu.be') != -1) {
+			return decodeURI(url).split('youtu.be/')[1];
+		}
+		return null;
+	}
+	// var urlLONG = "http://www.youtube.com/watch?v=UF8uR6Z6KLc&feature=feedlik";
+	// var urlSHORT = "http://youtu.be/UF8uR6Z6KLc";
+
+	<% @timeline.events.each do |event| %>
+	times[maxNumber] = "<%= best_in_place(event, :time) %>";
+	dess[maxNumber]="<%=escape_javascript best_in_place(event, :description, type: :textarea) %>";
+	videos[maxNumber]= getVideoId('<%= event.video %>');
+	videosText[maxNumber]="<%= best_in_place event, :video %>";
+	maxNumber++;
+	<% end %>
 	for(k=0;k<maxNumber;k++){
-		if(k==topdist){
-			playing[k]=!playing[k];
-			if(playing[k]==true)
-			$("#"+k).find(".shortcut").html(playhtml[topdist]);
-			else
-			$("#"+k).html(shortcut[topdist]);
+		playing[k]=false;
+	}
+
+	$("body").css("background-image","url('<%= @timeline.background %>')");
+	var maxLength=videoDist*maxNumber;
+	$('<div id="spur"></div>').appendTo("body");
+	$("#spur").css("height",videoDist*maxNumber+"px");
+	$("#spur").css("top",headerSpace+"px");
+	var length=headerSpace;
+	//get all events
+	for(var j=0;j<maxNumber;j++){
+		$("#profile").append("<div id='"+j+"' class='event'></div>");
+		$("#"+j).css("top",length+"px");
+		/!--random the position part-/
+		if(lr==true){
+			$("#"+j).css("left","538px");
 		}else{
-			if(playing[k]==true){
-				playing[k]=false;
-				$("#"+k).html(shortcut[k]);
+			$("#"+j).css("left","59px");
+		}
+		lr=!lr;
+		//assign the event content
+		var pic='http://img.youtube.com/vi/'+videos[j]+'/hqdefault.jpg';
+		var embeded='http://www.youtube.com/embed/'+videos[j];
+		shortcut[j]='<div class="date_area">'+times[j]+'</div><div id='+j+' class="shortcut"><img src="'+pic+'" height="227px" width="403px" position="absolute" top="0px" left="10px"></img></div>';
+		playhtml[j]='<iframe id="player" width="403px" height="227px" src="'+
+		embeded+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
+		$("#"+j).html(shortcut[j]);
+		$("#"+j).append("<div>"+videosText[j]+"</div><div class='describ'>"+dess[j]+"</div>");
+		length+=videoDist;
+	}
+	//the loop to build the rainbow
+	for(i=headerSpace;i<maxLength+headerSpace;i+=dist){
+		var iterator=i-headerSpace;
+		$("#spur").append("<div class='ruler' id='-"+i+"'><div class='innerRuler'></div></div>");
+		$('#-'+i).css("top",iterator);
+	}
+	//rainbow hover function
+	$(".ruler").hover(function(){
+		idtemp=parseInt($(this).attr("id"));
+		wavein(idtemp);
+	},
+	function(){
+		waveout(idtemp);
+	});	
+	//the click funtion of the spur
+	var topdist=0;
+	$("#spur").click(function(e){
+		topdist=parseInt((e.pageY-headerSpace)/videoDist);
+
+		for(k=0;k<maxNumber;k++){
+			if(k==topdist){
+				playing[k]=!playing[k];
+				if(playing[k]==true)
+				$("#"+k).find(".shortcut").html(playhtml[topdist]);
+				else
+				$("#"+k).html(shortcut[topdist]);
+			}else{
+				if(playing[k]==true){
+					playing[k]=false;
+					$("#"+k).html(shortcut[k]);
+				}
+			}
+		}
+		waveon();
+		setTimeout("newYouTubePlay()",1000);
+	});
+
+	function waveon(){
+		var waveid=-headerSpace-videoDist*topdist-Math.floor(Math.random()*(videoDist+1));
+		wavein(waveid);
+		waveout(waveid);
+		if(playing[topdist]==false){
+			return false;
+		}
+		setTimeout("waveon()",10);
+	}
+
+	function wavein(idtemp){
+		$("#"+idtemp).animate({width:"60px",
+		left:"-40px"},
+		beginAnimeTime);
+		$("#"+idtemp).find(".innerRuler").animate({height:"10px",top:"-5px"},beginAnimeTime);	
+		var col = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+		$("#"+idtemp).find(".innerRuler").css("background-color",col);
+		$("#"+(idtemp+dist)).animate({width:"50px",left:"-30px"},beginAnimeTime);
+		$("#"+(idtemp-dist)).animate({width:"50px",left:"-30px"},beginAnimeTime);
+		$("#"+(idtemp+2*dist)).animate({width:"45px",left:"-25px"},beginAnimeTime);
+		$("#"+(idtemp-2*dist)).animate({width:"45px",left:"-25px"},beginAnimeTime);
+	}
+	function waveout(idtemp){
+		$("#"+idtemp).animate({width:"24px",
+		left:"-10px"},
+		endAnimeTime);
+		$("#"+idtemp).find(".innerRuler").animate({height:"4px",top:"-2px"},endAnimeTime);
+		$("#"+(idtemp+dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
+		$("#"+(idtemp-dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
+		$("#"+(idtemp+2*dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
+		$("#"+(idtemp-2*dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
+	}
+
+	function newYouTubePlay() {
+		player = new YT.Player('player', {
+			events: {
+				'onStateChange': onPlayerStateChange
+			}
+		});
+	}
+	function onPlayerStateChange(event) {
+		if (event.data == YT.PlayerState.ENDED) {
+			if(stateShuffle == true){
+				var index = Math.floor(Math.random()*(maxNumber));
+				playNextVideo(index);
+			}else{
+				playNextVideo(topdist+1);			
+			}
+		}else{
+			if (event.data == YT.PlayerState.PLAYING) {
+				playing[topdist] = true;
+				waveon();
+			}
+			if (event.data == YT.PlayerState.PAUSED) {
+				playing[topdist] = false;
 			}
 		}
 	}
-	waveon();
-	setTimeout("newYouTubePlay()",1000);
-});
+	</script>
 
-function waveon(){
-	var waveid=-headerSpace-videoDist*topdist-Math.floor(Math.random()*(videoDist+1));
-	wavein(waveid);
-	waveout(waveid);
-	if(playing[topdist]==false){
-		return false;
-	}
-	setTimeout("waveon()",10);
-}
-
-function wavein(idtemp){
-	$("#"+idtemp).animate({width:"60px",
-	left:"-40px"},
-	beginAnimeTime);
-	$("#"+idtemp).find(".innerRuler").animate({height:"10px",top:"-5px"},beginAnimeTime);	
-	var col = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
-	$("#"+idtemp).find(".innerRuler").css("background-color",col);
-	$("#"+(idtemp+dist)).animate({width:"50px",left:"-30px"},beginAnimeTime);
-	$("#"+(idtemp-dist)).animate({width:"50px",left:"-30px"},beginAnimeTime);
-	$("#"+(idtemp+2*dist)).animate({width:"45px",left:"-25px"},beginAnimeTime);
-	$("#"+(idtemp-2*dist)).animate({width:"45px",left:"-25px"},beginAnimeTime);
-}
-function waveout(idtemp){
-	$("#"+idtemp).animate({width:"24px",
-	left:"-10px"},
-	endAnimeTime);
-	$("#"+idtemp).find(".innerRuler").animate({height:"4px",top:"-2px"},endAnimeTime);
-	$("#"+(idtemp+dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
-	$("#"+(idtemp-dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
-	$("#"+(idtemp+2*dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
-	$("#"+(idtemp-2*dist)).animate({width:"24px",left:"-10px"},endAnimeTime);
-}
-
-function newYouTubePlay() {
-	player = new YT.Player('player', {
-		events: {
-			'onStateChange': onPlayerStateChange
-		}
-	});
-}
-function onPlayerStateChange(event) {
-	if (event.data == YT.PlayerState.ENDED) {
-		if(stateShuffle == true){
-			var index = Math.floor(Math.random()*(maxNumber));
-			playNextVideo(index);
-		}else{
-			playNextVideo(topdist+1);			
-		}
-	}else{
-		if (event.data == YT.PlayerState.PLAYING) {
-			playing[topdist] = true;
-			waveon();
-		}
-		if (event.data == YT.PlayerState.PAUSED) {
-			playing[topdist] = false;
-		}
-	}
-}
-</script>
-
-<script>
+	<script>
 	$("#shuffle_play_button").click(function(){
 		stateShuffle = true;
 		var index = Math.floor(Math.random()*(maxNumber));
@@ -205,4 +210,11 @@ function onPlayerStateChange(event) {
 		waveon();
 		$('html, body').animate({ scrollTop: (headerSpace+110+(topdist-1)*videoDist)+"px" }, 'slow');
 	}
-</script>
+	</script>
+	
+	<script>
+	setTimeout(function(){
+		$(".smarterwiki-linkify").removeAttr("href");
+	},500);
+
+	</script>

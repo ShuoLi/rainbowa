@@ -13,9 +13,8 @@
 	<div id="profilePic"><img src=""/></div>
 	<% end %>
 	<div id="editProfilePic"><%= best_in_place @timeline, :photo %></div>
-	
-	<div id="profileName"><%= @timeline.subject %><div>
-	<div id="profileDes"><%= best_in_place @timeline, :description, type: :textarea %><div>
+	<div id="profileName"><%= @timeline.subject %>
+	<div id="profileDes"><%= best_in_place @timeline, :description, type: :textarea %></div></div>
 
 	<div id="editBackground">Change background image(link): <%= best_in_place @timeline, :background %></div>
 </div>
@@ -34,11 +33,11 @@ var idtemp=0;
 var dist=5;
 var beginAnimeTime=300;
 var endAnimeTime=300;
-var videoDist = 200;
+var videoDist = 227;
 var playing = new Array();
 var player;
 var stateShuffle = false;
-var headerSpace =150;
+var headerSpace =80;
 
 function getVideoId(url){
     if(url.indexOf('?') != -1 ) {
@@ -66,10 +65,12 @@ for(k=0;k<maxNumber;k++){
 	playing[k]=false;
 }
 
+$("body").css("background-image","url('http://shadowness.com/file/item3/60128/image_t6.jpg')");
 var maxLength=videoDist*maxNumber;
 $('<div id="spur"></div>').appendTo("body");
 $("#spur").css("height",videoDist*maxNumber+"px");
-var length=113;
+$("#spur").css("top",headerSpace+"px");
+var length=headerSpace;
 //get all events
 for(var j=0;j<maxNumber;j++){
 	$("#profile").append("<div id='"+j+"' class='event'></div>");

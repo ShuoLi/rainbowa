@@ -3,6 +3,17 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #newEventPanel{
-	margin: 120px 0px 0px 120px;
-	background: none;
+	background-color:black;
+	color:white;
+	opacity:0.7;
+	position:absolute;
+	padding-left:20px;
+	width:300px;
+	height:160px;
+	left:100px;
+	top:230px;
+}
+
+#ui-datepicker-div{
+	font-size:12px;
 }

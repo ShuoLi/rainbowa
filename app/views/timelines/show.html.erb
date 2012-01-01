@@ -1,11 +1,11 @@
 <br>
-<%= link_to "edit rainbow", edit_timeline_path %>
+<div id="editRainbowdiv"><button id="editRainbow"><%= link_to "edit rainbow", edit_timeline_path %></button><div>
 
 <div id="profile"> 
 	<div id="profilePic"><img src="<%= @timeline.photo %>"/></div>
-	<div id="profileName"><%= @timeline.subject %><div>
-	<div id="profileDes"><%= @timeline.description %><div>
-
+	<div id="profileName"><%= @timeline.subject %>
+	<div id="profileDes"><%= @timeline.description %></div>
+	</div>
 </div>
 <%= image_tag "shuffle.png", :size => "40x40", :alt => "shuffle", :id => "shuffle_play_button" %>
 
@@ -21,11 +21,11 @@ var idtemp=0;
 var dist=5;
 var beginAnimeTime=300;
 var endAnimeTime=300;
-var videoDist = 200;
+var videoDist = 227;
 var playing = new Array();
 var player;
 var stateShuffle = false;
-var headerSpace =150;
+var headerSpace =50;
 
 function getVideoId(url){
     if(url.indexOf('?') != -1 ) {
@@ -50,13 +50,15 @@ for(k=0;k<maxNumber;k++){
 	playing[k]=false;
 }
 
+//add a new background image for this page
+$("body").css("background-image","url('http://shadowness.com/file/item3/60128/image_t6.jpg')");
 var maxLength=videoDist*maxNumber;
 $('<div id="spur"></div>').appendTo("body");
-$("#spur").css("height",videoDist*maxNumber+"px");
-var length=113;
+$("#spur").css("height",videoDist*(maxNumber)+"px");
+var length=headerSpace;
 //get all events
 for(var j=0;j<maxNumber;j++){
-	$("#profile").append("<div id='"+j+"' class='event'></div>");
+	$("body").append("<div id='"+j+"' class='event'></div>");
 	$("#"+j).css("top",length+"px");
 	/!--random the position part-/
 	if(lr==true){

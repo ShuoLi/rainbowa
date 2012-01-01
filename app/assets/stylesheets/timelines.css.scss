@@ -8,7 +8,7 @@ body{
 	color:white;
 	font-size:11px;
 	width:411px;
-	height:400px;
+	height:340px;
 }
 }
 
@@ -22,15 +22,14 @@ body{
 
 #spur{
 	position:absolute;
-	background-color:black;
-	top:150px;
+	opacity:0.8;
+	top:65px;
 	width:24px;
-	left:488px;
+	left:500px;
 	z-index:-1;
 	.ruler{
 		position:absolute;
 		left:-10px;
-		background-color:black;
 		height:8px;
 		width:24px;
 		z-index:2;
@@ -74,67 +73,69 @@ color:black;
 	position: fixed;
 	right: 0px;
 	bottom: 0px;
+	width:40px;
+	height:40px;
 }
 
 #profile{
 	position:absolute;
-	top:37px;
-	left:0px;
-	width:800px;
-	height:110px;
+	top:90px;
+	left:-5px;
+	
 #profileName{
+	background-color:black;
+	opacity:0.7;
 	position:absolute;
-	opacity:0.6;
-	top:0px;
-	left:225px;
-	height:20px;
-	width:575px;
-	color:LIGHTBLUE;
-	font-size:20px;
-font-style: oblique;
-font-weight: 50;
-font-family: cursive;
+	left:182px;
+	height:40px;
+	width:285px;
+	color:Gold;
+	font-size:25px;
+	font-style: oblique;
+	font-weight: 100;
+	font-family: cursive;
+}
+#profileDes{
+	background-color:black;
+	color:white;
+	position:absolute;
+	top:40px;
+	left:0px;
+	height:70px;
+	width:285px;
+	font-size:15px;
+	font-style: normal;
+	font-weight: 100;
+	font-family:"Times New Roman",Georgia,Serif;
 }
 #profilePic{
-	background-image: url("default_profile.png");
-	background-size:147px 110px;
+	opacity:1.0;
+/*	background-image: url("default_profile.png");*/
+	background-size:110px 110px;
 	background-repeat:no-repeat;	
 	img{
 		height: 110px;
-		width: 147px;
 	}
 	position:absolute;
 	top:0px;
 	left:70px;
 	height:110px;
 	width:147px;
-	border-style:solid;
-	border-width:1px;
-	border-color:Gold;
 }
 #editProfilePic{
 	position:absolute;
 	top:112px;
 	left:70px;
-	width:150px;
+	width:100px;
 	height: 20px;
 	overflow:hidden;
 }
-#profileDes{
-	background-color:PaleGoldenRod ;
-	color:black;
-	opacity:1.0;
-	position:absolute;
-	top:30px;
-	left:1px;
-	height:76px;
-	width:575px;
-	font-size:15px;
-	font-style: normal;
-	font-weight: 100;
-	font-family:"Times New Roman",Georgia,Serif;
-	border-style:solid;
-	border-width:3px;
-	border-color:Turquoise ;
+
 }
+
+#editRainbowDiv{
+	position:absolute;
+	left:0px;
+	width:100px;
+	z-index:-3;
 }

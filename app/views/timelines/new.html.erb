@@ -1,7 +1,7 @@
 <div id="createTimeLine">	
 <% if current_user %>
 
-<span>new timeline</span>
+<span style="font-size:20px;">new timeline</span>
 
 <%= form_for(@timeline, :html => { :class => "new_timeline", :multipart => true}) do |tl| %>
 
@@ -22,5 +22,5 @@
 </div>
 
 <script>
-
+	$("body").css("background-color","#6FBBFC");
 </script>

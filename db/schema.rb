@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(:version => 20120101042326) do
 
   create_table "events", :force => true do |t|
     t.integer  "timeline_id"
-    t.integer  "group_id"
     t.datetime "time"
     t.string   "video",       :default => "edit here"
     t.text     "description", :default => "edit here"
@@ -23,7 +22,7 @@ ActiveRecord::Schema.define(:version => 20120101042326) do
     t.datetime "updated_at"
   end
 
-  add_index "events", ["group_id"], :name => "index_events_on_group_id"
+  add_index "events", ["timeline_id"], :name => "index_events_on_timeline_id"
 
   create_table "follows", :force => true do |t|
     t.integer  "user_id"

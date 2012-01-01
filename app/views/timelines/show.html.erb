@@ -7,7 +7,7 @@
 	<% if @timeline.photo %>
 	<div id="profilePic"><img src="<%= @timeline.photo %>"/></div>
 	<script>
-		$("#profilePic").css("background-image","none");
+	$("#profilePic").css("background-image","none");
 	</script>
 	<% else %>
 	<div id="profilePic"><img src=""/></div>
@@ -15,9 +15,9 @@
 	<div id="profileName"><%= @timeline.subject %></div>
 	<div id="profileDes"><%= @timeline.description %></div>
 </div>
-</div>
+<div>
 <%= image_tag "shuffle.png", :size => "40x40", :alt => "shuffle", :id => "shuffle_play_button" %>
-</>
+</div>
 <script>
 var times = new Array();
 var shortcut = new Array();
@@ -37,16 +37,16 @@ var stateShuffle = false;
 var headerSpace =50;
 
 function getVideoId(url){
-    if(url.indexOf('?') != -1 ) {
-        var query = decodeURI(url).split('?')[1];
-        var params = query.split('&');
-        for(var i=0,l = params.length;i<l;i++)
-            if(params[i].indexOf('v=') === 0)
-                return params[i].replace('v=','');
-    } else if (url.indexOf('youtu.be') != -1) {
-        return decodeURI(url).split('youtu.be/')[1];
-    }
-    return null;
+	if(url.indexOf('?') != -1 ) {
+		var query = decodeURI(url).split('?')[1];
+		var params = query.split('&');
+		for(var i=0,l = params.length;i<l;i++)
+		if(params[i].indexOf('v=') === 0)
+		return params[i].replace('v=','');
+	} else if (url.indexOf('youtu.be') != -1) {
+		return decodeURI(url).split('youtu.be/')[1];
+	}
+	return null;
 }
 
 <% @timeline.events.each do |event| %>
@@ -60,7 +60,7 @@ for(k=0;k<maxNumber;k++){
 }
 
 //add a new background image for this page
-$("body").css("background-image","url('http://shadowness.com/file/item3/60128/image_t6.jpg')");
+$("body").css("background-image","url('<%= @timeline.background %>')");
 var maxLength=videoDist*maxNumber;
 $('<div id="spur"></div>').appendTo("body");
 $("#spur").css("height",videoDist*(maxNumber)+"px");
@@ -104,7 +104,7 @@ function(){
 var topdist=0;
 $("#spur").click(function(e){
 	topdist=parseInt((e.pageY-headerSpace)/videoDist);
-	
+
 	for(k=0;k<maxNumber;k++){
 		if(k==topdist){
 			playing[k]=!playing[k];
@@ -184,19 +184,20 @@ function onPlayerStateChange(event) {
 </script>
 
 <script>
-	$("#shuffle_play_button").click(function(){
-		stateShuffle = true;
-		var index = Math.floor(Math.random()*(maxNumber));
-		playNextVideo(index);
-	});
-	function playNextVideo(index){// play next video of index
-		$("#"+topdist).html(shortcut[topdist]);
-		playing[topdist] = false;		
-		topdist = index;
-		$("#"+(topdist)).find(".shortcut").html(playhtml[topdist]);
-		playing[topdist] = true;
-		newYouTubePlay();
-		waveon();
-		$('html, body').animate({ scrollTop: (headerSpace+110+(topdist-1)*videoDist)+"px" }, 'slow');
-	}
+$("#shuffle_play_button").click(function(){
+	stateShuffle = true;
+	var index = Math.floor(Math.random()*(maxNumber));
+	playNextVideo(index);
+});
+function playNextVideo(index){// play next video of index
+	$("#"+topdist).html(shortcut[topdist]);
+	playing[topdist] = false;		
+	topdist = index;
+	$("#"+(topdist)).find(".shortcut").html(playhtml[topdist]);
+	playing[topdist] = true;
+	newYouTubePlay();
+	waveon();
+	$('html, body').animate({ scrollTop: (headerSpace+110+(topdist-1)*videoDist)+"px" }, 'slow');
+}
 </script>
+

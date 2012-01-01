@@ -12,11 +12,12 @@
 	<% else %>
 	<div id="profilePic"><img src=""/></div>
 	<% end %>
-	<div id="profileName"><%= @timeline.subject %><div>
-	<div id="profileDes"><%= @timeline.description %><div>
+	<div id="profileName"><%= @timeline.subject %></div>
+	<div id="profileDes"><%= @timeline.description %></div>
+</div>
 </div>
 <%= image_tag "shuffle.png", :size => "40x40", :alt => "shuffle", :id => "shuffle_play_button" %>
-
+</>
 <script>
 var times = new Array();
 var shortcut = new Array();

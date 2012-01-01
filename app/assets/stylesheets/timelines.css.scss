@@ -23,7 +23,7 @@ body{
 #spur{
 	position:absolute;
 	opacity:0.8;
-	top:65px;
+	top:50px;
 	width:24px;
 	left:500px;
 	z-index:-1;
@@ -91,16 +91,14 @@ color:black;
 	width:285px;
 	color:Gold;
 	font-size:25px;
-	font-style: oblique;
-	font-weight: 100;
-	font-family: cursive;
 }
 #profileDes{
 	background-color:black;
 	color:white;
+	opacity:0.7;
 	position:absolute;
 	top:40px;
-	left:0px;
+	left:182px;
 	height:70px;
 	width:285px;
 	font-size:15px;

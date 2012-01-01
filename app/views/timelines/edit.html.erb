@@ -18,8 +18,6 @@
 </div>
 	<div id="editBackground">background(url)</div><div id="show"><%= best_in_place @timeline, :background %></div>
 
-	<%= image_tag "shuffle.png", :size => "40x40", :alt => "shuffle", :id => "shuffle_play_button" %>
-
 	<script>
 	var times = new Array();
 	var shortcut = new Array();
@@ -195,11 +193,6 @@
 	</script>
 
 	<script>
-	$("#shuffle_play_button").click(function(){
-		stateShuffle = true;
-		var index = Math.floor(Math.random()*(maxNumber));
-		playNextVideo(index);
-	});
 	function playNextVideo(index){// play next video of index
 		$("#"+topdist).html(shortcut[topdist]);
 		playing[topdist] = false;		

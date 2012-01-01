@@ -2,7 +2,14 @@
 <%= link_to "edit rainbow", edit_timeline_path %>
 
 <div id="profile"> 
+	<% if @timeline.photo %>
 	<div id="profilePic"><img src="<%= @timeline.photo %>"/></div>
+	<script>
+		$("#profilePic").css("background-image","none");
+	</script>
+	<% else %>
+	<div id="profilePic"><img src=""/></div>
+	<% end %>
 	<div id="profileName"><%= @timeline.subject %><div>
 	<div id="profileDes"><%= @timeline.description %><div>
 

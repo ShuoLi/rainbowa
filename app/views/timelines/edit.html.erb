@@ -4,7 +4,14 @@
 <%= render "events/newevent" %>
 
 <div id="profile">
+	<% if @timeline.photo %>
 	<div id="profilePic"><img src="<%= @timeline.photo %>"/></div>
+	<script>
+		$("#profilePic").css("background-image","none");
+	</script>
+	<% else %>
+	<div id="profilePic"><img src=""/></div>
+	<% end %>
 	<div id="editProfilePic"><%= best_in_place @timeline, :photo %></div>
 	
 	<div id="profileName"><%= @timeline.subject %><div>

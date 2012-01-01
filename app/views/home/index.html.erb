@@ -51,32 +51,24 @@
 
 <script type="text/javascript">
 $(function () {
-	var photoSide = winWidth/15;
-	// var galleryHeight = photoSide;
-	$("#gallery").css("width",winWidth+"px");
-	$("#gallery").css("height",photoSide+"px");
-	$("#gallery").css("left","0px");	
-	$("#gallery").css("margin-top","50px");	
+	var photoPerRow = 10;
+	var photoSide = winWidth/photoPerRow;
+	$("#gallery_top").css("width",winWidth+"px");
+	$("#gallery_top").css("height",photoSide+"px");
+	$("#gallery_top").css("left","0px");	
+	$("#gallery_top").css("margin-top","50px");
+	
 	$.ajax({
-		url: 'http://api.flickr.com/services/rest/',
-		data: {
-			format: 'json',
-			method: 'flickr.interestingness.getList',
-			api_key: '7617adae70159d09ba78cfec73c13be3'
-		},
-		dataType: 'jsonp',
-		jsonp: 'jsoncallback',
-		success: function (data) {
-			$.each(data.photos.photo, function (index, photo) {
-				var url = 'http://farm' + photo.farm + '.static.flickr.com/' +
-				photo.server + '/' + photo.id + '_' + photo.secret;
-				$('<a rel="gallery"></a>')
-				.append($('<img height="'+photoSide+'px" width="'+photoSide+'px">').prop('src', url + '_s.jpg'))
-				.prop('href', url + '_b.jpg')
-				.prop('title', photo.title)
-				.appendTo('#gallery');
-			});
-		}
+		url:"<%= gettop_path %>", 
+		type:"POST",
+		data: {"photoSide":photoSide}
 	});
+	
+	//ajax start
+
+	//ajax end
+	
+	
+
 });
 </script>

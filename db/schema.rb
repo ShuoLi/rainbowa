@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120101031815) do
+ActiveRecord::Schema.define(:version => 20120101042326) do
 
   create_table "events", :force => true do |t|
     t.integer  "timeline_id"

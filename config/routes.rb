@@ -1,5 +1,7 @@
 Youtubetimelinewiki::Application.routes.draw do
 
+  match "/gettop" => "home#get_top"
+
   get "home/index"
 
   match "/auth/:provider/callback" => "sessions#create"

@@ -1,0 +1,14 @@
+<% @timelines.each do |timeline| %>
+<% if timeline.photo.nil? %>
+	var url = '/assets/default_profile.png';
+<% else %>
+	var url = '<%= timeline.photo %>';
+<% end %>
+// var url = 'http://farm8.static.flickr.com/7013/6604420707_7033e84840_b.jpg';
+var photoSide=<%= @photo_side %>;
+$('<a rel="gallery_top"></a>')
+.append($('<img height="'+photoSide+'px" width="'+photoSide+'px">').prop('src', url))
+.prop('href', "<%= timeline %>")
+.prop('title', "<%= timeline.subject %>")
+ .appendTo('#gallery_top');
+<% end %>

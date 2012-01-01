@@ -1,7 +1,7 @@
 <header>
 <% if current_user %>
 <div id="userName">
-	<div id="logo" class="headerButton"></div>
+<a href="<%= root_path %>"><div id="logo" class="headerButton"></div></a>
 	<div id="search" class="headerButton">
 		<div id="searchInput"><input type="text"  placeholder="Search" size="30"/></div>
 	</div>
@@ -12,7 +12,7 @@
  
 <% else %>
 <div id="userName">
-	<div id="logo" class="headerButton"></div>
+	<a href="<%= root_path %>"><div id="logo" class="headerButton"></div></a>
 	<div id="search" class="headerButton">
 		<div id="searchInput"><input type="text"  placeholder="Search" size="35"/></div>
 	</div>

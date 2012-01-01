@@ -8,7 +8,7 @@
 var photoSide=<%= @photo_side %>;
 $('<a rel="gallery_top"></a>')
 .append($('<img height="'+photoSide+'px" width="'+photoSide+'px">').prop('src', url))
-.prop('href', "<%= timeline %>")
+.prop('href', "./timelines/"+<%= timeline.id %>)
 .prop('title', "<%= timeline.subject %>")
  .appendTo('#gallery_top');
 <% end %>

@@ -1,5 +1,7 @@
 <br>
-<div id="editRainbowdiv"><button id="editRainbow"><%= link_to "edit rainbow", edit_timeline_path %></button><div>
+<div id="editRainbowdiv">
+	<a href="<%= edit_timeline_path %>"><button id="editRainbow">edit rainbow</button></a>
+</div>
 
 <div id="profile"> 
 	<% if @timeline.photo %>

@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111231220707) do
+ActiveRecord::Schema.define(:version => 20120101031815) do
 
   create_table "events", :force => true do |t|
     t.integer  "timeline_id"
     t.integer  "group_id"
     t.datetime "time"
-    t.string   "video"
-    t.text     "description"
+    t.string   "video",       :default => "edit here"
+    t.text     "description", :default => "edit here"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -45,14 +45,8 @@ ActiveRecord::Schema.define(:version => 20111231220707) do
   add_index "records", ["event_id"], :name => "index_records_on_event_id"
   add_index "records", ["user_id"], :name => "index_records_on_user_id"
 
-  create_table "timelines", :force => true do |t|
-    t.string   "subject"
-    t.text     "description"
-    t.string   "photo"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "background"
-  end
+# Could not dump table "timelines" because of following StandardError
+#   Unknown type 'background' for column 'background'
 
   create_table "users", :force => true do |t|
     t.string   "email"

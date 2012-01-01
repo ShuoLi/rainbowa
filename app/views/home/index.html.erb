@@ -42,15 +42,19 @@
 	$(".home_middle").css("margin-top",40+"px");	
 </script>
 
-<div id="gallery" >
+<div id="gallery_top" >
+</div>
+<div id="gallery_pop" >
+</div>
+<div id="gallery_random" >
 </div>
 
 <script type="text/javascript">
 $(function () {
 	var photoSide = winWidth/15;
-	var galleryHeight = winWidth/5;
+	// var galleryHeight = photoSide;
 	$("#gallery").css("width",winWidth+"px");
-	$("#gallery").css("height",galleryHeight+"px");
+	$("#gallery").css("height",photoSide+"px");
 	$("#gallery").css("left","0px");	
 	$("#gallery").css("margin-top","50px");	
 	$.ajax({
@@ -74,7 +78,5 @@ $(function () {
 			});
 		}
 	});
-
-
 });
 </script>

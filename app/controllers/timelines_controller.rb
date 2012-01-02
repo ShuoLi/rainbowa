@@ -12,6 +12,11 @@ class TimelinesController < ApplicationController
   end
 
   def destroy
+    if current_user.admin?
+      @timeline = Timeline.find(params[:id])
+      @timeline.destroy
+      redirect_to timelines_path
+    end
   end
   
   def edit

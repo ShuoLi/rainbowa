@@ -13,4 +13,9 @@ class User < ActiveRecord::Base
     end
   end
   
+  def admin?
+    puts "abcabc"
+    self.admin
+  end
+  
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120101042326) do
+ActiveRecord::Schema.define(:version => 20120102152210) do
 
   create_table "events", :force => true do |t|
     t.integer  "timeline_id"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20120101042326) do
     t.string   "provider"
     t.string   "uid"
     t.string   "name"
+    t.boolean  "admin",      :default => false
   end
 
 end

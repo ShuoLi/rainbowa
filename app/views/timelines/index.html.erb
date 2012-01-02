@@ -2,7 +2,7 @@
 
 <% if current_user %>
 	<a href="<%= new_timeline_path %>">
-		<%= button_tag "new timeline" %>
+		<%= button_tag "create new timeline page" %>
 	</a>
 <% end %>
 
@@ -11,6 +11,10 @@
 	<li>
 		<%= link_to "TIMELINE "+ tl.subject, tl %>
 		<%= tl.description %>, <%= tl.created_at.to_s %>
+		<% if current_user.admin? %>
+			<%= link_to "delete", tl, :method => :delete, :confirm => "You sure?",
+			                                :title => "Delete this timeline" %>
+		<% end %>
 	</li>
 	<% end %>
 </ul>

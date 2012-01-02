@@ -1,22 +1,22 @@
 
 <div id="newEventPanel">
 <% if current_user %>
-<span>new event</span>
+<span>new video event</span>
 <%= form_for(@event, :html => { :class => "new_event", :multipart => true}) do |e| %>
 
 <%= e.hidden_field :timeline_id, :value => @timeline.id %>
 <%#= e.hidden_field :time, :value => "123" %>
 
-<%= e.label :time, "time" %>
+<%= e.label :time, "event date" %>
 <%= e.text_field :time , :size=>"30"%><br>
 
-<%= e.label :video, "video" %>
+<%= e.label :video, "youtube video address" %>
 <%= e.text_field :video, :size=>"29" %><br>
 
 <%= e.label :description, "description" %><br>
 <%= e.text_area :description, :cols => 30, :rows => 3 %><br>
 
-<%= e.submit "post" %>
+<%= e.submit "post on timeline" %>
 
 <% end %>
 

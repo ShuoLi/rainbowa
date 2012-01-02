@@ -1,7 +1,7 @@
 <div id="createTimeLine">	
 <% if current_user %>
 
-<span style="font-size:20px;">new timeline</span>
+<span style="font-size:20px;">new video timeline</span>
 
 <%= form_for(@timeline, :html => { :class => "new_timeline", :multipart => true}) do |tl| %>
 
@@ -11,7 +11,7 @@
 <%= tl.label :description, "description" %><br>
 <%= tl.text_area :description %><br>
 
-<%= tl.label :photo, "photo_link" %><br>
+<%= tl.label :photo, "photo address" %><br>
 <%= tl.text_field :photo %><br>
 
 <%= tl.submit "create timeline" %>

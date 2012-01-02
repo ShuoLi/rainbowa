@@ -1,7 +1,7 @@
 <% if current_user %>
 <br>
 <% if if_follow?(@timeline.id) %>
-<%= button_to_function "unfollow", "follow()", :id => "follow_button", :style => "width:7em;" %>
+<%#= button_to_function "unfollow", "follow()", :id => "follow_button", :style => "width:7em;" %>
 <% else %>
 <%= button_to_function "follow", "follow()", :id => "follow_button", :style => "width:7em;" %>
 <% end %>

@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :email
+  attr_accessible :email,:photo
   
   has_many :follows
   has_many :records

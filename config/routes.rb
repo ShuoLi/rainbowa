@@ -1,5 +1,7 @@
 Youtubetimelinewiki::Application.routes.draw do
 
+  resources :users
+
   match "/gettop" => "home#get_top"
 
   get "home/index"

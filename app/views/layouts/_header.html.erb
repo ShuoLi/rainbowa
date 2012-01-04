@@ -4,7 +4,7 @@
 	<!-- <div id="search" class="headerButton">
 		<div id="searchInput"><input type="text"  placeholder="Search" size="30"/></div>
 	</div> -->
-	<div id="userState" class="headerButton"><%= current_user.name.split(" ").first %></div>
+	<div id="userState" class="headerButton"><a href="<%= user_path(current_user) %>"><%= current_user.name.split(" ").first %></a></div>
 	<div id="signout" class="headerButton"><%= link_to "Sign Out", signout_path %></div>
 
  

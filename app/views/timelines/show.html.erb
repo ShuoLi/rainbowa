@@ -1,6 +1,11 @@
 <br>
-<div id="editRainbowdiv">
-	<a href="<%= edit_timeline_path %>"><button id="editRainbow">you can edit this page</button></a>
+<div id="editRainbowDiv">
+	
+	<div class="fg-buttonset fg-buttonset-single ui-helper-clearfix">
+			<button id="editButton" class="fg-button ui-state-default  ui-priority-primary ui-corner-left">Edit</button>
+			<button id="showButton" class="fg-button ui-state-default ui-state-active ui-priority-primary ui-corner-right">View</button>
+		</div>
+	
 </div>
 <div id="follow">
 <%= render "follow_timeline" %>
@@ -40,6 +45,7 @@ var player;
 var stateShuffle = false;
 var headerSpace =50;
 var flipping = new Array();
+var titles = new Array();
 var orientations=new Array("tb","bt","lr","rl");
 
 function getVideoId(url){
@@ -59,6 +65,7 @@ function getVideoId(url){
 times[maxNumber] = '<%= event.time.strftime("%Y-%m-%d") if event.time %>';
 dess[maxNumber]='<%=escape_javascript event.description %>';
 videos[maxNumber]= getVideoId('<%=event.video%>');
+titles[maxNumber]='<%=escape_javascript event.title%>';
 maxNumber++;
 <% end %>
 for(k=0;k<maxNumber;k++){
@@ -83,7 +90,7 @@ for(var j=0;j<maxNumber;j++){
 		$("#"+j).css("left","59px");
 	}
 	lr=!lr;
-	$("body").append("<div id='time"+j+"' class=time>"+times[j]+"</div>");
+	$("body").append("<div id='time"+j+"' class=time><div class='timeStamp'>"+times[j]+"</div><div class='eventTitle'>"+titles[j]+"</div></div>");
 	$("#time"+j).css('top',(length+227)+"px");
 	$("#time"+j).css('left',$("#"+j).css("left"));
 	//assign the event content
@@ -217,9 +224,10 @@ $(".event").click(function(){
 		speed:'fast',
 		color:'black',
 			onBefore: function(){
-				
+
 			},
 			onAnimation: function(){
+
 			},
 			onEnd: function(){
 				if(flipping[idtemp]==true){
@@ -231,4 +239,37 @@ $(".event").click(function(){
 	});
 });
 </script>
+
+<script type="text/javascript">
+
+		$("#editButton").click(function(){
+			window.location.href="<%= edit_timeline_path %>";
+		});
+		
+	$(function(){
+		//all hover and click logic for buttons
+		$(".fg-button:not(.ui-state-disabled)")
+		.hover(
+			function(){ 
+				$(this).addClass("ui-state-hover"); 
+			},
+			function(){ 
+				$(this).removeClass("ui-state-hover"); 
+			}
+		)
+		.mousedown(function(){
+				$(this).parents('.fg-buttonset-single:first').find(".fg-button.ui-state-active").removeClass("ui-state-active");
+				if( $(this).is('.ui-state-active.fg-button-toggleable, .fg-buttonset-multi .ui-state-active') ){ $(this).removeClass("ui-state-active"); }
+				else { $(this).addClass("ui-state-active"); }	
+		})
+		.mouseup(function(){
+			if(! $(this).is('.fg-button-toggleable, .fg-buttonset-single .fg-button,  .fg-buttonset-multi .fg-button') ){
+				$(this).removeClass("ui-state-active");
+			}
+		});
+	});
+</script>
+
+
+
 

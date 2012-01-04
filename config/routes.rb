@@ -10,6 +10,7 @@ Youtubetimelinewiki::Application.routes.draw do
 
   match '/followtl' => 'follows#create'
   match '/unfollowtl' => 'follows#destroy'
+  match '/chenkun' => "timelines#chenkun"
   resources :follows
 
   resources :events

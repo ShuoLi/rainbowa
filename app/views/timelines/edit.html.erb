@@ -1,13 +1,18 @@
 <br>
-<a href="<%= timeline_path %>"><button>show page</button></a>
+<div id="editRainbowDiv">
+	
+	<div class="fg-buttonset fg-buttonset-single ui-helper-clearfix">
+			<button id="editButton" class="fg-button ui-state-default ui-state-active ui-priority-primary ui-corner-left">Edit</button>
+			<button id="showButton" class="fg-button ui-state-default  ui-priority-primary ui-corner-right">View</button>
+		</div>
 
+</div>
 
 <div id="descriptionEdit">
 	<p>How to edit: just click on whatever you want to make better. (video link, photo link, background image, description)</p>
 </div>
 <div id="follow">
-<div id="editBackground">background(url)</div>
-<div id="show"><%= best_in_place @timeline, :background %></div>
+<div id="backgroundShow" class="date_area">background:<%= best_in_place @timeline, :background %></div>
 </div>
 <div id="profile">
 	<% if @timeline.photo %>
@@ -33,6 +38,7 @@
 	var dess = new Array();
 	var videos=new Array();
 	var videosText=new Array();
+	var titles = new Array();
 	var lr=true;//0-left 1-right
 	var maxNumber=0;
 	var idtemp=0;
@@ -43,7 +49,7 @@
 	var playing = new Array();
 	var player;
 	var stateShuffle = false;
-	var headerSpace =100;
+	var headerSpace =120;
 	$("#editBackground,#show").hover(function(){
 		$("#show").css("visibility","visible");
 	},function(){
@@ -70,6 +76,7 @@
 	dess[maxNumber]="<%=escape_javascript best_in_place(event, :description, type: :textarea) %>";
 	videos[maxNumber]= getVideoId('<%= event.video %>');
 	videosText[maxNumber]="<%= best_in_place event, :video %>";
+	titles[maxNumber]='<%=escape_javascript best_in_place(event, :title)%>';
 	maxNumber++;
 	<% end %>
 	for(k=0;k<maxNumber;k++){
@@ -96,11 +103,11 @@
 		//assign the event content
 		var pic='http://img.youtube.com/vi/'+videos[j]+'/hqdefault.jpg';
 		var embeded='http://www.youtube.com/embed/'+videos[j];
-		shortcut[j]='<div class="date_area">'+times[j]+'</div><div id='+j+' class="shortcut"><img src="'+pic+'" height="227px" width="403px"></img></div>';
+		shortcut[j]='<div class="date_area">TIME:'+times[j]+'</div><div id='+j+' class="shortcut"><img src="'+pic+'" height="227px" width="403px"></img></div>';
 		playhtml[j]='<iframe id="player" width="403px" height="227px" src="'+
 		embeded+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
 		$("#"+j).html(shortcut[j]);
-		$("#"+j).append("<div class='date_area'>"+videosText[j]+"</div><div class='date_area'>"+dess[j]+"</div>");
+		$("#"+j).append("<div class='date_area'>TITLE:"+titles[j]+"</div><div class='date_area'>VIDEO :"+videosText[j]+"</div><div class='date_area'>DETAIL:"+dess[j]+"</div>");
 		length+=videoDist;
 	}
 	//the loop to build the rainbow
@@ -219,3 +226,38 @@
 	},500);
 
 	</script>
+	
+	
+	<script type="text/javascript">
+		$("#showButton").click(function(){
+							window.location.href="<%= timeline_path %>";
+		});
+
+
+
+		$(function(){
+			//all hover and click logic for buttons
+			$(".fg-button:not(.ui-state-disabled)")
+			.hover(
+				function(){ 
+					$(this).addClass("ui-state-hover"); 
+				},
+				function(){ 
+					$(this).removeClass("ui-state-hover"); 
+				}
+			)
+			.mousedown(function(){
+					$(this).parents('.fg-buttonset-single:first').find(".fg-button.ui-state-active").removeClass("ui-state-active");
+					if( $(this).is('.ui-state-active.fg-button-toggleable, .fg-buttonset-multi .ui-state-active') ){ $(this).removeClass("ui-state-active"); }
+					else { $(this).addClass("ui-state-active"); }	
+			})
+			.mouseup(function(){
+				if(! $(this).is('.fg-button-toggleable, .fg-buttonset-single .fg-button,  .fg-buttonset-multi .fg-button') ){
+					$(this).removeClass("ui-state-active");
+				}
+			});
+		});
+	</script>
+
+
+

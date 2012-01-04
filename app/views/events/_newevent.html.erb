@@ -7,10 +7,11 @@
 <%= e.hidden_field :timeline_id, :value => @timeline.id %>
 <%#= e.hidden_field :time, :value => "123" %>
 
-<%= e.label :time, "event date" %>
+<%= e.label :time, "event date:" %>
 <%= e.text_field :time , :size=>"30"%><br>
-
-<%= e.label :video, "youtube video address" %>
+<%= e.label :title, "title:" %>
+<%= e.text_field :title , :size=>"30"%><br>
+<%= e.label :video, "youtube address:" %>
 <%= e.text_field :video, :size=>"29" %><br>
 
 <%= e.label :description, "description" %><br>

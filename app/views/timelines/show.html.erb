@@ -5,7 +5,7 @@
 <div id="follow">
 <%= render "follow_timeline" %>
 <span>click timeline to play video.</span>
-<div>
+</div>
 <div id="profile"> 
 	<% if @timeline.photo %>
 	<div id="profilePic"><img src="<%= @timeline.photo %>"/></div>
@@ -34,7 +34,7 @@ var idtemp=0;
 var dist=5;
 var beginAnimeTime=300;
 var endAnimeTime=300;
-var videoDist = 170;
+var videoDist = 227;
 var playing = new Array();
 var player;
 var stateShuffle = false;
@@ -56,7 +56,7 @@ function getVideoId(url){
 }
 
 <% @timeline.events.each do |event| %>
-times[maxNumber] = '<%= event.time.to_s %>';
+times[maxNumber] = '<%= event.time.strftime("%Y-%m-%d") if event.time %>';
 dess[maxNumber]='<%=escape_javascript event.description %>';
 videos[maxNumber]= getVideoId('<%=event.video%>');
 maxNumber++;
@@ -83,6 +83,9 @@ for(var j=0;j<maxNumber;j++){
 		$("#"+j).css("left","59px");
 	}
 	lr=!lr;
+	$("body").append("<div id='time"+j+"' class=time>"+times[j]+"</div>");
+	$("#time"+j).css('top',(length+227)+"px");
+	$("#time"+j).css('left',$("#"+j).css("left"));
 	//assign the event content
 	var pic='http://img.youtube.com/vi/'+videos[j]+'/hqdefault.jpg';
 	var embeded='http://www.youtube.com/embed/'+videos[j];
@@ -107,7 +110,7 @@ function(){
 	waveout(idtemp);
 });	
 //the click funtion of the spur
-var topdist=0;
+var topdist=-2;
 $("#spur").click(function(e){
 	topdist=parseInt((e.pageY-headerSpace)/videoDist);
 	for(k=0;k<maxNumber;k++){
@@ -212,7 +215,7 @@ $(".event").click(function(){
 	$(this).flip({
 		direction:orientations[oindex],
 		speed:'fast',
-		color:'lightblue',
+		color:'black',
 			onBefore: function(){
 				
 			},

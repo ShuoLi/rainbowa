@@ -4,11 +4,13 @@ class EventsController < ApplicationController
   def create
     # puts params[:event]
     ep = params[:event]
-    event = Timeline.find(ep[:timeline_id]).events.build(:time => ep[:time],
-                                                :video => ep[:video],
-                                                :description => ep[:description])
+    timeline = Timeline.find(ep[:timeline_id])
+    event = timeline.events.build(:time => ep[:time],
+                                  :video => ep[:video],
+                                  :description => ep[:description])
     event.records.build(:user_id => current_user.id)
     if event.save
+      follow(timeline)
       redirect_to timeline_path(ep[:timeline_id])
     else
       flash[:error] = "new event error."
@@ -21,6 +23,8 @@ class EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
     @event.update_attributes(params[:event])
+    @event.records.create(:user_id => current_user.id)
+    follow(@event.timeline)
     respond_with @event
   end
 
@@ -29,5 +33,5 @@ class EventsController < ApplicationController
 
   def show
   end
-
+  
 end

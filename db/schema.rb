@@ -20,9 +20,10 @@ ActiveRecord::Schema.define(:version => 20120104203539) do
     t.text      "description", :default => "edit here"
     t.timestamp "created_at"
     t.timestamp "updated_at"
+    t.string    "title"
   end
 
-  add_index "events", ["group_id"], :name => "index_events_on_group_id"
+  add_index "events", ["timeline_id"], :name => "index_events_on_timeline_id"
 
   create_table "follows", :force => true do |t|
     t.integer   "user_id"

@@ -11,50 +11,59 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120102152210) do
+ActiveRecord::Schema.define(:version => 20120104203539) do
 
   create_table "events", :force => true do |t|
-    t.integer  "timeline_id"
-    t.datetime "time"
-    t.string   "video",       :default => "edit here"
-    t.text     "description", :default => "edit here"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "timeline_id"
+    t.timestamp "time"
+    t.string    "video",       :default => "edit here"
+    t.text      "description", :default => "edit here"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   add_index "events", ["timeline_id"], :name => "index_events_on_timeline_id"
 
   create_table "follows", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "timeline_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "user_id"
+    t.integer   "timeline_id"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   add_index "follows", ["timeline_id"], :name => "index_follows_on_timeline_id"
   add_index "follows", ["user_id"], :name => "index_follows_on_user_id"
 
   create_table "records", :force => true do |t|
-    t.integer  "event_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "event_id"
+    t.integer   "user_id"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.integer   "timeline_id"
   end
 
   add_index "records", ["event_id"], :name => "index_records_on_event_id"
+  add_index "records", ["timeline_id"], :name => "index_records_on_timeline_id"
   add_index "records", ["user_id"], :name => "index_records_on_user_id"
 
-# Could not dump table "timelines" because of following StandardError
-#   Unknown type 'background' for column 'background'
+  create_table "timelines", :force => true do |t|
+    t.string    "subject"
+    t.text      "description",  :default => "edit here"
+    t.string    "photo",        :default => "edit here"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.text      "background"
+    t.integer   "follow_count", :default => 0
+  end
 
   create_table "users", :force => true do |t|
-    t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "provider"
-    t.string   "uid"
-    t.string   "name"
-    t.boolean  "admin",      :default => false
+    t.string    "email"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.string    "provider"
+    t.string    "uid"
+    t.string    "name"
+    t.boolean   "admin",      :default => false
   end
 
 end

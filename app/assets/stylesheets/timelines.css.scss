@@ -1,23 +1,16 @@
-// Place all the styles related to the Timelines controller here.
+// Place all the styles related editProfilePicto the Timelines controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
+$modify: white;
 body{
 .event{
+	opacity:1.0;
 	position:absolute;
 	color:white;
 	font-size:11px;
-	width:411px;
-	height:340px;
+	width:403px;
+	height:227px;
 }
-}
-
-#timeStamp{
-	height:20px;
-	width:40px;
-	color:white;
-	position:absolute;
-	left:474px;
 }
 
 #spur{
@@ -44,6 +37,7 @@ body{
 }
 
 .shortcut{
+	background-color:white;
 	position:relative;
 	left:0px;
 	top:-0px;
@@ -51,22 +45,6 @@ body{
 	width:403px;
 }
 
-.describ{
-	height:168px;
-	width:70;
-	overflow:auto;
- }
-
-#editPanel{
-color:black;
-	z-index: 1;
-	height:100px;
-	width:300px;
-	background-color:white;
-	position:absolute;
-	top:90px;
-	left:100px;
-}
 
 /* css for player button groups */
 #shuffle_play_button{
@@ -80,13 +58,12 @@ color:black;
 #profile{
 	position:absolute;
 	top:90px;
-	left:-5px;
 	
 #profileName{
 	background-color:black;
 	opacity:0.7;
 	position:absolute;
-	left:182px;
+	left:157px;
 	height:40px;
 	width:285px;
 	color:Gold;
@@ -98,7 +75,7 @@ color:black;
 	opacity:0.7;
 	position:absolute;
 	top:40px;
-	left:182px;
+	left:157px;
 	height:70px;
 	width:285px;
 	font-size:15px;
@@ -116,15 +93,20 @@ color:black;
 	}
 	position:absolute;
 	top:0px;
-	left:70px;
+	left:59px;
 	height:110px;
 	width:147px;
 }
 #editProfilePic{
+	background-color:white;
+	border-style:solid;
+	border-width:3px;
+	border-color:DarkRed;
+	color:black;
 	position:absolute;
 	top:112px;
-	left:70px;
-	width:100px;
+	left:59px;
+	width:397px;
 	height: 20px;
 	overflow:hidden;
 }
@@ -135,26 +117,53 @@ color:black;
 	position:absolute;
 	left:0px;
 	width:100px;
+	background-color:white;
+	border-style:solid;
+	border-width:3px;	
+	border-color:DarkRed;
 	z-index:-3;
 }
 
 #editBackground{
-	color:white;
+	color:black;
 	width:100px;
-	background-color:black;
-	opacity:0.7;
-	position:absolute;
-	right:100px;
-	top:50px;
+	background-color:$modify;
 	height:20px;
 }
 
 #show{
 	color:LIGHTBLUE;
 	background-color:yellow;
+	visibility:hidden;
+}
+
+#follow{
+	position:absolute;
+	top:50px;
+	width:200px;
+	height:30px;
+}
+.time{
+	position:absolute;
+	width:403px;
+	height:20px;
+	background-color:black;
+	opacity:0.7;
+}
+#descriptionEdit{
+	background-color:BLACK;
 	opacity:0.7;
 	position:absolute;
-	right:100px;
-	top:70px;
-	visibility:hidden;
+	left:558px;
+	top:90px;
+	width:403px;
+	height:80px;
+}
+.date_area{
+	background-color:$modify;
+	color:black;
+	font-size:14px;
+	border-style:solid;
+	border-width:3px;
+	border-color:DarkRed;
 }

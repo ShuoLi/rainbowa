@@ -1,10 +1,14 @@
 <br>
 <a href="<%= timeline_path %>"><button>show page</button></a>
 
-<p>How to edit: just click on whatever you want to make better. (video link, photo link, background image, description)</p>
 
-<%= render "events/newevent" %>
-
+<div id="descriptionEdit">
+	<p>How to edit: just click on whatever you want to make better. (video link, photo link, background image, description)</p>
+</div>
+<div id="follow">
+<div id="editBackground">background(url)</div>
+<div id="show"><%= best_in_place @timeline, :background %></div>
+</div>
 <div id="profile">
 	<% if @timeline.photo %>
 	<div id="profilePic"><img src="<%= @timeline.photo %>"/></div>
@@ -16,9 +20,11 @@
 	<% end %>
 	<div id="editProfilePic"><%= best_in_place @timeline, :photo %></div>
 	<div id="profileName"><%= @timeline.subject %></div>
-	<div id="profileDes"><%= best_in_place @timeline, :description, type: :textarea %></div>
+	<div id="profileDes">
+		<div class="date_area"><%= best_in_place @timeline, :description, type: :textarea %></div>
+	</div>
 </div>
-	<div id="editBackground">background(url)</div><div id="show"><%= best_in_place @timeline, :background %></div>
+	<%= render "events/newevent" %>
 
 	<script>
 	var times = new Array();
@@ -37,7 +43,7 @@
 	var playing = new Array();
 	var player;
 	var stateShuffle = false;
-	var headerSpace =80;
+	var headerSpace =100;
 	$("#editBackground,#show").hover(function(){
 		$("#show").css("visibility","visible");
 	},function(){
@@ -79,7 +85,7 @@
 	//get all events
 	for(var j=0;j<maxNumber;j++){
 		$("#profile").append("<div id='"+j+"' class='event'></div>");
-		$("#"+j).css("top",length+"px");
+		$("#"+j).css("top",length+"px");	
 		/!--random the position part-/
 		if(lr==true){
 			$("#"+j).css("left","538px");
@@ -90,11 +96,11 @@
 		//assign the event content
 		var pic='http://img.youtube.com/vi/'+videos[j]+'/hqdefault.jpg';
 		var embeded='http://www.youtube.com/embed/'+videos[j];
-		shortcut[j]='<div class="date_area">'+times[j]+'</div><div id='+j+' class="shortcut"><img src="'+pic+'" height="227px" width="403px" position="absolute" top="0px" left="10px"></img></div>';
+		shortcut[j]='<div class="date_area">'+times[j]+'</div><div id='+j+' class="shortcut"><img src="'+pic+'" height="227px" width="403px"></img></div>';
 		playhtml[j]='<iframe id="player" width="403px" height="227px" src="'+
 		embeded+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
 		$("#"+j).html(shortcut[j]);
-		$("#"+j).append("<div>"+videosText[j]+"</div><div class='describ'>"+dess[j]+"</div>");
+		$("#"+j).append("<div class='date_area'>"+videosText[j]+"</div><div class='date_area'>"+dess[j]+"</div>");
 		length+=videoDist;
 	}
 	//the loop to build the rainbow

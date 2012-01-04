@@ -2,8 +2,10 @@
 <div id="editRainbowdiv">
 	<a href="<%= edit_timeline_path %>"><button id="editRainbow">you can edit this page</button></a>
 </div>
+<div id="follow">
 <%= render "follow_timeline" %>
 <span>click timeline to play video.</span>
+</div>
 <div id="profile"> 
 	<% if @timeline.photo %>
 	<div id="profilePic"><img src="<%= @timeline.photo %>"/></div>
@@ -19,6 +21,7 @@
 <div>
 <%= image_tag "shuffle.png", :size => "40x40", :alt => "shuffle", :id => "shuffle_play_button" %>
 </div>
+<%= javascript_include_tag "jquery.flip.min.js" %>
 <script>
 var times = new Array();
 var shortcut = new Array();
@@ -36,6 +39,8 @@ var playing = new Array();
 var player;
 var stateShuffle = false;
 var headerSpace =50;
+var flipping = new Array();
+var orientations=new Array("tb","bt","lr","rl");
 
 function getVideoId(url){
 	if(url.indexOf('?') != -1 ) {
@@ -51,13 +56,14 @@ function getVideoId(url){
 }
 
 <% @timeline.events.each do |event| %>
-times[maxNumber] = '<%= event.time.to_s %>';
+times[maxNumber] = '<%= event.time.strftime("%Y-%m-%d") if event.time %>';
 dess[maxNumber]='<%=escape_javascript event.description %>';
 videos[maxNumber]= getVideoId('<%=event.video%>');
 maxNumber++;
 <% end %>
 for(k=0;k<maxNumber;k++){
 	playing[k]=false;
+	flipping[k]=false;
 }
 
 //add a new background image for this page
@@ -77,14 +83,16 @@ for(var j=0;j<maxNumber;j++){
 		$("#"+j).css("left","59px");
 	}
 	lr=!lr;
+	$("body").append("<div id='time"+j+"' class=time>"+times[j]+"</div>");
+	$("#time"+j).css('top',(length+227)+"px");
+	$("#time"+j).css('left',$("#"+j).css("left"));
 	//assign the event content
 	var pic='http://img.youtube.com/vi/'+videos[j]+'/hqdefault.jpg';
 	var embeded='http://www.youtube.com/embed/'+videos[j];
-	shortcut[j]='<div class="date_area">'+times[j]+'</div><div id='+j+' class="shortcut"><img src="'+pic+'" height="227px" width="403px" position="absolute" top="0px" left="10px"></img></div>';
-	playhtml[j]='<iframe id="player" width="403px" height="227px" src="'+
-	embeded+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
+	shortcut[j]='<div id='+j+' class="shortcut"><img src="'+pic+'" height="227px" width="403px" position="absolute" top="0px" left="10px"></img></div>';
+	playhtml[j]='<div id='+j+' class="shortcut"><iframe id="player" width="403px" height="227px" src="'+
+	embeded+'?autoplay=1" frameborder="0" allowfullscreen></iframe></div>';
 	$("#"+j).html(shortcut[j]);
-	$("#"+j).append("<div class='describ'>"+dess[j]+"</div>");
 	length+=videoDist;
 }
 //the loop to build the rainbow
@@ -102,15 +110,14 @@ function(){
 	waveout(idtemp);
 });	
 //the click funtion of the spur
-var topdist=0;
+var topdist=-2;
 $("#spur").click(function(e){
 	topdist=parseInt((e.pageY-headerSpace)/videoDist);
-
 	for(k=0;k<maxNumber;k++){
 		if(k==topdist){
 			playing[k]=!playing[k];
 			if(playing[k]==true)
-			$("#"+k).find(".shortcut").html(playhtml[topdist]);
+			$("#"+k).html(playhtml[topdist]);
 			else
 			$("#"+k).html(shortcut[topdist]);
 		}else{
@@ -194,11 +201,34 @@ function playNextVideo(index){// play next video of index
 	$("#"+topdist).html(shortcut[topdist]);
 	playing[topdist] = false;		
 	topdist = index;
-	$("#"+(topdist)).find(".shortcut").html(playhtml[topdist]);
+	$("#"+(topdist)).html(playhtml[topdist]);
 	playing[topdist] = true;
 	newYouTubePlay();
 	waveon();
 	$('html, body').animate({ scrollTop: (headerSpace+110+(topdist-1)*videoDist)+"px" }, 'slow');
 }
+
+$(".event").click(function(){
+	var idtemp=parseInt($(this).attr("id"));
+	flipping[idtemp]=!flipping[idtemp];
+	var oindex=Math.floor(Math.random()*4);
+	$(this).flip({
+		direction:orientations[oindex],
+		speed:'fast',
+		color:'black',
+			onBefore: function(){
+				
+			},
+			onAnimation: function(){
+			},
+			onEnd: function(){
+				if(flipping[idtemp]==true){
+					$("#"+idtemp).html(dess[idtemp]);
+				}else{
+					$("#"+idtemp).html(shortcut[idtemp]);
+				}
+			}
+	});
+});
 </script>
 

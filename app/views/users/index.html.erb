@@ -1,2 +1,13 @@
 <h1>Users#index</h1>
 <p>Find me in app/views/users/index.html.erb</p>
+
+<ul>
+<% i = 1 %>
+<% @users.each do |u| %>
+	<li>
+		<%= i %>
+		<%= u.name %>
+	</li>
+	<% i=i+1 %>
+<% end %>
+</ul>

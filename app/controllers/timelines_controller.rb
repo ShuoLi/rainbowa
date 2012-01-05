@@ -4,6 +4,7 @@ class TimelinesController < ApplicationController
   def create
     @timeline = Timeline.create(params[:timeline])
     follow(timeline)
+    @timeline.update_attributes(:last_edit => Time.now)
     redirect_to timeline_path(@timeline)
   end
 
@@ -27,6 +28,7 @@ class TimelinesController < ApplicationController
   def update
     @timeline = Timeline.find(params[:id])
     @timeline.update_attributes(params[:timeline])
+    @timeline.update_attributes(:last_edit => Time.now)
     respond_with @timeline
   end
 

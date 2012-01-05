@@ -11,6 +11,7 @@ class EventsController < ApplicationController
     event.records.build(:user_id => current_user.id)
     if event.save
       follow(timeline)
+      timeline.update_attributes(:last_edit => Time.now)
       redirect_to timeline_path(ep[:timeline_id])
     else
       flash[:error] = "new event error."
@@ -25,6 +26,7 @@ class EventsController < ApplicationController
     @event.update_attributes(params[:event])
     @event.records.create(:user_id => current_user.id)
     follow(@event.timeline)
+    @event.timeline.update_attributes(:last_edit => Time.now)
     respond_with @event
   end
 

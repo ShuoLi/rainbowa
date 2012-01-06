@@ -1,12 +1,4 @@
-<script>
-	$(document).ready(function() {
-		alert("<%= @data_array%>");
-		var timelineArray = $.getJSON("<%= @data_array%>", function() {
-		  alert("success");
-		})
 
-	});
-</script>
 <table id="outsideTable">
 	<tr>
 		<td id="leftPanel">
@@ -36,26 +28,64 @@
 		<td  id="centerPanel">
 			<div id="centerTop">
 
-					<script>
-						$(function() {
-							$( "#check" ).button();
-							$( "#cb" ).buttonset();
-						});
-						</script>
-						<style>
-						#format { margin-top: 2em; }
-						</style>
-					<div id="cb"  class="ui-buttonset">
-						<input type="checkbox" id="follow" /><label for="follow">follow</label>
-						<input type="checkbox" id="editing" /><label for="editing">editing</label>
-						<input type="checkbox" id="popular" /><label for="popular">popular</labe
+				<script>
+				var videoID;
+				var id;
+				var pic;
+				function getVideoId(url){
+					if(url.indexOf('?') != -1 ) {
+						var query = decodeURI(url).split('?')[1];
+						var params = query.split('&');
+						for(var i=0,l = params.length;i<l;i++)
+						if(params[i].indexOf('v=') === 0)
+						return params[i].replace('v=','');
+					} else if (url.indexOf('youtu.be') != -1) {
+						return decodeURI(url).split('youtu.be/')[1];
+					}
+					return null;
+				}
+				
+				$(function() {
+					$( "#check" ).button();
+					$( "#cb" ).buttonset();
+				});
+				</script>
+				<style>
+				#format { margin-top: 2em; }
+				</style>
+				<div id="cb"  class="ui-buttonset">
+					<input type="checkbox" id="follow" /><label for="follow">follow</label>
+					<input type="checkbox" id="editing" /><label for="editing">editing</label>
+					<input type="checkbox" id="popular" /><label for="popular">popular</label>
+					</div>
 				</div>
-			</div>
-			<div id="centerContent"></div>
-		</td>
+				<div id="centerContent">
+				</div>
+			</td>
 
-		<td id="rightPanel">
-		</td>
-	</tr>
-</table>
+			<td id="rightPanel">
+			</td>
+		</tr>
+	</table>
+	
+	<script>
+	// alert('<%=@data_array[0]["data"][0]["video"] %>');
+	<% @data_array.each do |event| %>
+ 	id=<%= event["id"] %>;
+	videoID=getVideoId("<%=event['data'].first['video']%>");
+	pic='http://img.youtube.com/vi/'+videoID+'/hqdefault.jpg';
+		$("#centerContent").append("<div class='eventDetail' id='"+id+"' >");
+		$('#<%= event["id"] %>').append("<table><tr><td class='mainVideo'><img src='"+pic+"' height='168px' width='300px' position='absolute' top='0px' left='10px'/></td><td class='mainVideoDes'><div><%= event['data'].first['title'] %></div><div><%= event['data'].first['who'] %></div><div><%=event['data'].first['when'] %></div></td></tr></table>");
+		<% event["data"].each do |detail| %>
+		videoID=getVideoId("<%=detail['video']%>");
+		pic='http://img.youtube.com/vi/'+videoID+'/hqdefault.jpg';
+		$('#<%= event["id"] %>').append("<div class='video'><img src='"+pic+"' height='66px' width='117px' position='absolute' top='0px' left='10px'/><div class='videoDes'><div class='videoContent'><%= detail['title'] %></div><div  class='videoContent'><%= detail['who'] %></div></div></div></div>");
+		<% end %>
+		$("#centerContent").append("</div>")
+	<% end %>
+	</script>
+	
+	<script>
+
+	</script>
 

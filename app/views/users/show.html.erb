@@ -1,2 +1,61 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<script>
+	$(document).ready(function() {
+		alert("<%= @data_array%>");
+		var timelineArray = $.getJSON("<%= @data_array%>", function() {
+		  alert("success");
+		})
+
+	});
+</script>
+<table id="outsideTable">
+	<tr>
+		<td id="leftPanel">
+			<table id="userInfo">
+				<tr>
+					<td>
+						<div  id="userPhoto">
+							<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Ray_eye.jpg/400px-Ray_eye.jpg" width=100px height=100px/>
+						</div>
+					</td>
+					<td id="userName">
+						<%= @user.name %>
+					</td>
+				</tr>
+			</table>
+
+			<div id="channels">
+				<!-- <button id="beginning"  class="button ui-state-default  ui-priority-primary">Blues</button>
+				<button id="beginning"  class="button ui-state-default  ui-priority-primary">Rock</button>
+				<button id="beginning"  class="button ui-state-default  ui-priority-primary">Jazz</button>
+				<button id="beginning"  class="button ui-state-default  ui-priority-primary">Country</button>
+				<button id="beginning"  class="button ui-state-default  ui-priority-primary">Hip Hop</button>
+				<button id="beginning"  class="button ui-state-default  ui-priority-primary">RnB</button> -->
+			</div>
+		</td>
+
+		<td  id="centerPanel">
+			<div id="centerTop">
+
+					<script>
+						$(function() {
+							$( "#check" ).button();
+							$( "#cb" ).buttonset();
+						});
+						</script>
+						<style>
+						#format { margin-top: 2em; }
+						</style>
+					<div id="cb"  class="ui-buttonset">
+						<input type="checkbox" id="follow" /><label for="follow">follow</label>
+						<input type="checkbox" id="editing" /><label for="editing">editing</label>
+						<input type="checkbox" id="popular" /><label for="popular">popular</labe
+				</div>
+			</div>
+			<div id="centerContent"></div>
+		</td>
+
+		<td id="rightPanel">
+		</td>
+	</tr>
+</table>
+

@@ -1,3 +1,109 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+$bgcolor:#272727;
+body{
+	background-color:#6FBBFC;
+}
+#outsideTable{
+	position:absolute;
+	top:40px;
+	left:2%;
+	color:white;
+	#leftPanel{
+		background-color:#272727;
+		vertical-align:top;
+		height:600px;
+		width:200px;
+		#userPhoto{
+			width:100px;
+			height:100px;
+		}
+		#userName{
+			opacity:0.7;
+			width:100px;
+		}
+		#channels{
+			width:200px;
+			height:500px;
+		}
+	}
+
+	#centerPanel{
+		margin:3px;
+		opacity:0.8;
+		vertical-align:top;
+		z-index:1;
+		width:600px;
+		height:400px;
+		float:right;
+		#centerTop{
+			#cb{
+				position:absolute;
+				right:235px;
+				width:200px;
+				height:30px;
+			}
+			.ui-button{
+				width:60px;
+				font-size:10px;
+			}
+			width:600px;
+			height:25px;
+			background-color:#272727 ;
+		}
+		#centerContent{
+			width:500px;
+			background-color:black;
+		}
+	}
+
+	#rightPanel{
+		vertical-align:top;
+/*		background-color:$bgcolor;*/
+		z-index:1;
+		width:250px;
+	}
+}
+
+ul{
+	display:block;
+}
+
+li{
+	display: list-item;
+	list-style-type: none
+}
+
+
+
+.fg-buttonset .fg-button { float: top;}
+.fg-buttonset-multi .fg-button { margin-right: -1px;}
+.fg-toolbar .fg-button { font-size: 3em;  }
+
+.button{
+	width: 200px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+table{
+	border-style:none;
+	padding:0;
+	margin:0;
+	border-spacing: 0px;
+}
+
+td{
+	border-style:none;
+	padding:0;
+	margin:0;
+}
+
+tr{
+	border-style:none;
+	padding:0;
+	margin:0;
+}
+
+

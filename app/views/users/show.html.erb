@@ -69,7 +69,6 @@
 	</table>
 	
 	<script>
-	// alert('<%=@data_array[0]["data"][0]["video"] %>');
 	<% @data_array.each do |event| %>
  	id=<%= event["id"] %>;
 	videoID=getVideoId("<%=event['data'].first['video']%>");
@@ -85,7 +84,3 @@
 	<% end %>
 	</script>
 	
-	<script>
-
-	</script>
-

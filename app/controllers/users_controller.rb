@@ -3,9 +3,9 @@ class UsersController < ApplicationController
 
   def show
     # remove later just for change database
-    Record.find(:all).each do |r|
-      r.update_attributes(:timeline_id => r.event.timeline.id)
-    end
+    # Record.find(:all).each do |r|
+    #   r.update_attributes(:timeline_id => r.event.timeline.id)
+    # end
 
     @user = User.find(params[:id])
     @follows = @user.follows.find(:all)

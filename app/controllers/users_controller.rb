@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
   include ActionView::Helpers::DateHelper
-  
+
   def show
     # remove later just for change database
-    # Record.find(:all).each do |r|
-    #     r.update_attributes(:timeline_id => r.event.timeline.id)
-    #   end
-    
+    Record.find(:all).each do |r|
+      r.update_attributes(:timeline_id => r.event.timeline.id)
+    end
+
     @user = User.find(params[:id])
     @follows = @user.follows.find(:all)
     @TL_f = Array.new
@@ -31,19 +31,19 @@ class UsersController < ApplicationController
       records.each do |r|
         event = r.event
         history = {"title" => event.title, 
-                  "video" => event.video, 
-                  "who" => r.user.name.split(" ").first,
-                  "when" => time_ago_in_words(r.created_at, false) + ' ago'}
-        tl["data"] << history
+          "video" => event.video, 
+          "who" => r.user.name.split(" ").first,
+          "when" => time_ago_in_words(r.created_at, false) + ' ago'}
+          tl["data"] << history
+        end
+        @data_array << tl
       end
-      @data_array << tl
     end
-  end
 
-  def index
-    if current_user.admin?
-      @users = User.all
+    def index
+      if current_user.admin?
+        @users = User.all
+      end
     end
-  end
 
-end
+  end
